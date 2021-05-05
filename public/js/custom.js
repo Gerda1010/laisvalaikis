@@ -67,23 +67,26 @@ btn2.onclick = function() {
 // }
 
 // matcho save buttonui
-$(document).ready(function () {
+// $(document).ready(function () {
+//
+//     $("#matchForm").submit(function (e) {
+//
+//         //stop submitting the form to see the disabled button effect
+//         e.preventDefault();
+//
+//         //disable the submit button
+//         $("#matchSave").attr("disabled", true);
+//         //
+//         // //disable a normal button
+//         // $("#btnTest").attr("disabled", true);
+//         // $("#quantity1").attr("disabled", true);
+//         // $("#quantity2").attr("disabled", true);
+//         return true;
+//
+//     });
+// });
 
-    $("#matchForm").submit(function (e) {
 
-        //stop submitting the form to see the disabled button effect
-        e.preventDefault();
-
-        //disable the submit button
-        $("#matchSave").attr("disabled", true);
-        //
-        // //disable a normal button
-        // $("#btnTest").attr("disabled", true);
-
-        return true;
-
-    });
-});
 function myFunction() {
     var x = document.getElementById("myTopnav");
     if (x.className === "topnav") {

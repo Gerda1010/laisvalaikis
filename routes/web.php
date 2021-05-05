@@ -42,6 +42,8 @@ use App\Models\Tournament;
 Route::get('/dashboard', 'homeController@index')->middleware(['auth'])->name('dashboard');
 Route::get('/', 'homeController@guest');
 
+
+
 require __DIR__.'/auth.php';
 
 
@@ -75,6 +77,11 @@ Route::post('/insertResult/{id}','tournamentsController@insertResult')->name('in
 //Profile
 Route::get('/profile', 'profileController@index');
 Route::get('/reservations/{id}', 'profileController@cancelReservation')->name('cancelReservation');
+
+Route::get('change-password', 'profileController@changePassword');
+
+Route::post('change-password', 'profileController@store')->name('change.password');
+
 
 
 //Schedule

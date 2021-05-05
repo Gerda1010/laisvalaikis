@@ -137,15 +137,12 @@
                         @endforeach
                     </tr>
 
-{{--                    <tr>--}}
+                    <tr>
 
-{{--                        <td style="width: 60%;">Narių skaičius</td>--}}
-{{--                        @foreach($allGames as $gme)--}}
-{{--                            @if($gme->id_Game === $Tournament->fk_Gameid_Game)--}}
-{{--                                <td style="width: 40%;">{{$gme->NumberOfMembers}}</td>--}}
-{{--                            @endif--}}
-{{--                        @endforeach--}}
-{{--                    </tr>--}}
+                        <td style="width: 60%;">Komandų skaičius</td>
+                        <td style="width: 40%;">{{$Tournament->MaximumTeams}}</td>
+
+                    </tr>
                     <tr style="border-bottom: 1px solid #000;">
                     <tr>
 
@@ -164,7 +161,6 @@
                     </tbody>
 
                 </table>
-
             </div>
         </div>
 
@@ -198,22 +194,48 @@
 
             <tbody>
 
-                @foreach($allTournTeams as $tt)
-                    @foreach($allTeams as $team)
-                        <tr>
-                        @if($tt->fk_Teamid_Team === $team->id_Team)
-                                <td style="width: 70%;"> {{$team->Name}} </td>
-                        @endif
-{{--                            @foreach($allTournTeams as $rez)--}}
-{{--                                @if($team->id_Team===$tt->fk_Teamid_Team)--}}
+{{--                @foreach($allTournTeams as $tt)--}}
+{{--                    @foreach($allTeams as $team)--}}
+{{--                        <tr>--}}
+{{--                        @if($tt->fk_Teamid_Team === $team->id_Team)--}}
+{{--                                <td style="width: 70%;"> {{$team->Name}} </td>--}}
+{{--                            @if()--}}
+
+{{--                      --}}
 {{--                            <td style="width: 30%;">{{$tt->victories}} </td>--}}
-{{--                                @endif--}}
+
+
+{{--                            @endif--}}
 {{--                                @break--}}
 {{--                            @endforeach--}}
-                        </tr>
+{{--                        </tr>--}}
 
-                    @endforeach
-                @endforeach
+{{--                    @endforeach--}}
+{{--                   --}}
+{{--                @endforeach--}}
+@foreach($allTournTeams as $tt)
+
+        <tr>
+            @foreach($allTeams as $team)
+                @if($tt->fk_Teamid_Team === $team->id_Team)
+                    <td style="width: 70%;"> {{$team->Name}}  </td>
+                @endif
+            @endforeach
+
+
+
+
+
+
+                    <td style="width: 30%;">{{$tt->victories}} </td>
+
+        </tr>
+
+
+
+@endforeach
+
+
             </tbody>
 
         </table>
@@ -265,49 +287,72 @@
 
         @foreach($allMatches as $mat)
             <div style="background-color: #4a5568;color: white;font-size: 16px;padding: 10px;">
-                <form action="{{ route('insertResult',$mat->id_team_match)}}"  method="post" >
+                <form action="{{ route('insertResult',$mat->id_team_match)}}"  method="post" id="matchForm" >
                     {{ csrf_field() }}
                     <table>
                     <tbody>
                     @foreach($tournTeams1 as $tt1)
+                        <tr>
                         @if($mat->fk_Team1===$tt1->komid)
 
                         <td>{{$tt1->pavad1}}</td>
 {{--                        <td>{{$mat->id_team_match}}</td>--}}
+                        @if($mat->result1=== null)
                                 <td>
-                                        <input type="number" id="quantity" name="result1" min="1" max="9" style="border-radius: 7px;margin-left: 10px; color: black">
+                                        <input type="number" id="quantity2" name="result1" min="1" max="9" style="border-radius: 7px;margin-left: 10px; color: black">
 {{--                                        <input type="submit">--}}
                                 </td>
+                                @else
+                                    <td style=" text-align: center; color: white; font-weight: bolder; width: 30px; padding-left: 20px">
+                                        <h6 style="margin-bottom: 0;">{{$mat->result1}}</h6>
+                                        {{--                                        <input type="submit">--}}
+                                    </td>
+
+
+                                @endif
+                                @break
+                            @endif
+                                @endforeach
                     </tr>
-                    @break
-                    @endif
-                    @endforeach
                     <tr>
                     @foreach($tournTeams2 as $tt2)
                             @if($mat->fk_Team2===$tt2->komid2)
 
                         <td>{{$tt2->pavad2}}</td>
+                            @if($mat->result2=== null)
                                 <td>
-                                    <form>
-                                        <input type="number"  id="quantity" name="result2" min="1" max="9" style="border-radius: 7px;margin-left: 10px;alignment: right; color: black">
+                                        <input type="number"  id="quantity2" name="result2" min="1" max="9" style="border-radius: 7px;margin-left: 10px;alignment: right; color: black">
                                 </td>
+                                @else
+                                    <td style=" text-align: center; color: white; font-weight: bolder; width: 30px; padding-left: 20px">
+                                        <h6 style="margin-bottom: 0;">{{$mat->result2}}</h6>
+                                    </td>
+                        @endif
+                                @break
+
+                            @endif
+                        @endforeach
                     </tr>
                     <tr >
-                        <td></td>
+
                         <td>
 {{--                                <button type="submit" id="matchBtn" class="btn btn-primary"">--}}
 {{--                                    Išsaugoti--}}
 {{--                                </button>--}}
-                            <input type="submit" id="buttonMtch" value="Save" style="background-color: ghostwhite; color: black; border-radius: 5px; " />
+{{--                      <script>--}}
+{{--                          $("#submit").on("click", function() {--}}
+{{--                              $("#quantity1").attr("disabled", "disabled");--}}
+{{--                          });--}}
+
+{{--                      </script>--}}
+
+                            <input type="submit" id="matchSave" value="Save" style="background-color: ghostwhite; color: black; border-radius: 5px; " />
 
 {{--                            <input type="submit" style="color: #1a202c">--}}
                         </td>
                     </tr>
 
-                    @break
 
-                            @endif
-                    @endforeach
                             </tbody>
             </table>
                 </form>

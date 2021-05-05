@@ -26,15 +26,15 @@
 <body>
 
 @if (count($errors) > 0)
-    <div class="fixed-top messages" style="border-bottom: white">
-        <div class="alert alert-danger">
+    <div class="fixed-top messages" >
+        <div class="alert alert-danger" style="background-color: darkred; color: white; margin-bottom: 10px">
             <p>Kažkas ne taip:</p>
             @foreach ($errors->all() as $error)
                 <p>{{ $error }}</p>
             @endforeach
         </div>
         @elseif ($message = Session::get('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success" style="background-color: darkgreen; color: white; margin-bottom: 10px">
                 <p>{{ $message }}</p>
             </div>
     </div>

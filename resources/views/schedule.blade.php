@@ -66,6 +66,9 @@
         <p>{{$time}}</p>
     </td>
     @foreach($allObjects as $obj)
+        @if(count($allReservations)===0)
+            <td style="background-color: seagreen; color: white">Laisva</td>
+        @else
     @foreach($allReservations as $res)
 
         @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
@@ -77,6 +80,7 @@
 @break
 
     @endforeach
+        @endif
 
                 @endforeach
 

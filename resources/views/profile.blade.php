@@ -34,6 +34,10 @@
 
                     </table>
                 </div>
+
+                <a href="{{action('profileController@changePassword')}}" id="button1" class="btn btn-dark" style="width: 150px; margin-left: 5px;margin-right: 5px">
+                    Keisti slaptažodį </a>
+
             </div>
 
             <div class="item22" >

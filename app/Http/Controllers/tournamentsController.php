@@ -52,7 +52,7 @@ class tournamentsController extends Controller
         $allStates = State::all();
         $allGames = Game::all();
         $allComments = Comment::all();
-        $allTournTeams = tournament_team::where('fk_Tournamentid_Tournament','=', $id)->get();
+        $allTournTeams = tournament_team::where('fk_Tournamentid_Tournament','=', $id)->orderBy('victories', 'desc')->get();
         $allMatches = Matches::where('fk_Tournamentid_Tournament','=', $id)->get();
       //  $tournTeams = Team::where('fk_Tournamentid_Tournament','=', $id)->get();
 
@@ -65,10 +65,10 @@ class tournamentsController extends Controller
             ->distinct()
             ->get(['komid2']);
 
-
+        $komandos = tournament_team::where('fk_Tournamentid_Tournament','=',36)->orderby('victories','desc')->first();
 //        $test = DB::table('matches') DISTINCT
 
-        return view('tournament', compact('Tournament','allTeams', 'allUserTeams','logs','allUsers', 'allGames', 'allStates', 'allTournTeams','allComments','allMatches','tournTeams1','tournTeams2'));
+        return view('tournament', compact('Tournament','komandos','allTeams', 'allUserTeams','logs','allUsers', 'allGames', 'allStates', 'allTournTeams','allComments','allMatches','tournTeams1','tournTeams2'));
     }
     public function insertTournament(Request $request)
     {
@@ -76,6 +76,7 @@ class tournamentsController extends Controller
             [   'Name' =>$request->input('Name'),
 
                 'StartDate' =>$request->input('StartDate'),
+                'MaximumTeams' => $request->input('MaximumTeams'),
 
                 'fk_Gameid_Game' =>$request->input('fk_Gameid_Game'),
 
@@ -101,6 +102,7 @@ class tournamentsController extends Controller
             $newTourn->Name = $request->input('Name');
 
             $newTourn->StartDate = $request->input('StartDate');
+            $newTourn->MaximumTeams = $request->input('MaximumTeams');
 
             $newTourn->fk_Gameid_Game = $request->input('fk_Gameid_Game');
 
@@ -141,6 +143,7 @@ class tournamentsController extends Controller
 
         $tmm=tournament_team::where('fk_Tournamentid_Tournament', '=',$id)->where('fk_Teamid_Team','=', $request->input('fk_Teamid_Team'))->count();
 
+
         if ($tmm>0)
         {
             return Redirect::back()->withErrors('Pasirinkta komanda jau dalyvauja turnyre');
@@ -159,37 +162,14 @@ class tournamentsController extends Controller
         $newLog->fk_Userid_User =  Auth::user()->id;
         $newLog->save();
 
-//        $validator = Validator::make(
-//            [   'fk_Teamid_Team' =>$request->input('fk_Teamid_Team'),
-//                'fk_Tournamentid_Tournament'=>$id,
-//
-//            ],
-//            [
-//                'fk_Teamid_Team' => 'required|unique:tournament_team,fk_Teamid_Team,NULL,id,fk_Tournamentid_Tournament,1',
-//
-//
-//
-////                'email' => 'unique:users,email_address,NULL,id,account_id,1'
-//
-////                Rule::unique('tournament_team', 'fk_Tournamentid_Tournament'),
-//            ]
-//
-//        );
-//        if ($validator->fails())
-//        {
-//            return Redirect::back()->withErrors($validator)->withInput();
-//        }
-//        else
-//        {
-//
-//            $newTournamentTeam = new tournament_team();
-//
-//            $newTournamentTeam->fk_Teamid_Team = $request->input('fk_Teamid_Team');
-//            $newTournamentTeam->fk_Tournamentid_Tournament = $id;
-//            $newTournamentTeam->save();
-//
-//        }
-        return back()->with('success', 'Jūs užsiregistravote!');
+
+        $teamsCount = tournament_team::where('fk_Tournamentid_Tournament', '=',$id)->count();
+        $turnyras = Tournament::where('id_Tournament','=',$id)->first();
+        if($teamsCount==$turnyras->MaximumTeams){
+            return $this->startTournament($id);
+        }
+        else
+         return back()->with('success', 'Jūs užsiregistravote!');
     }
     public function insertComment(Request $request, $id)
     {
@@ -283,7 +263,7 @@ class tournamentsController extends Controller
             ],
             [
                 'result1'=> 'required',
-                'result2'=> 'required'
+                'result2'=> 'required|different:result1'
             ]
         );
 
@@ -337,9 +317,9 @@ class tournamentsController extends Controller
                 [
                     'winner' => $mt->fk_Team2,
                 ]);
-            $komanda2 = tournament_team::where([['fk_Tournamentid_Tournament','=',$mt->fk_Tournamentid_Tournament],['fk_Teamid_Team','=', $mt->fk_Team1]])->first();
+            $komanda2 = tournament_team::where([['fk_Tournamentid_Tournament','=',$mt->fk_Tournamentid_Tournament],['fk_Teamid_Team','=', $mt->fk_Team2]])->first();
 
-            tournament_team::where([['fk_Tournamentid_Tournament','=',$mt->fk_Tournamentid_Tournament],['fk_Teamid_Team','=', $mt->fk_Team1]])->update(
+            tournament_team::where([['fk_Tournamentid_Tournament','=',$mt->fk_Tournamentid_Tournament],['fk_Teamid_Team','=', $mt->fk_Team2]])->update(
                 [
                     'victories' => ($komanda2->victories + 1),
                 ]);
@@ -357,6 +337,7 @@ class tournamentsController extends Controller
     //patikrinti ar yra paskutinis matchas
     public function checkIfLast($id2){
         $allMatches = Matches::where('fk_Tournamentid_Tournament','=',$id2)->get();
+        $komandos = tournament_team::where('fk_Tournamentid_Tournament','=',$id2)->orderby('victories','desc')->first();
         $cn =0;
         foreach ($allMatches as $mat){
             if($mat->winner == null ){
@@ -367,6 +348,12 @@ class tournamentsController extends Controller
             Tournament::where('id_Tournament', '=', $id2)->update(
                 [
                     'state'=> 1,//finished
+                ]);
+
+            Team::where('id_Team', '=', $komandos->fk_Teamid_Team)->update(
+                [
+
+                    'WonTournaments' => ($komandos->WonTournaments + 1),
                 ]);
 
             return Redirect::back()->with('Turnyras baigtas');
