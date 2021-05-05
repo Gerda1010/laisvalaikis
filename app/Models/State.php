@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {
-    protected $table = 'State';
+    protected $table = 'state';
     protected $primaryKey = 'id_Status';
     public $timestamps = false;
 

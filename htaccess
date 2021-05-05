@@ -1,0 +1,19 @@
+
+
+# DO NOT REMOVE THIS LINE AND THE LINES BELLOW SSL_REDIRECT:laisvalaikis.andrejasap.xyz
+RewriteEngine on
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} (www\.)?laisvalaikis.andrejasap.xyz
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# DO NOT REMOVE THIS LINE AND THE LINES BELLOW SSL_REDIRECT:laisvalaikis.andrejasap.xyz
+
+# DO NOT REMOVE THIS LINE AND THE LINES BELLOW UPGRADE_INSECURE_REQUESTS:laisvalaikis.andrejasap.xyz
+Header always set Content-Security-Policy: upgrade-insecure-requests
+# DO NOT REMOVE THIS LINE AND THE LINES BELLOW UPGRADE_INSECURE_REQUESTS:laisvalaikis.andrejasap.xyz
+
+
+ <IfModule mod_rewrite.c>
+     RewriteEngine on
+     RewriteRule    ^$    public/    [L]
+     RewriteRule    (.*) public/$1    [L]
+ </IfModule>

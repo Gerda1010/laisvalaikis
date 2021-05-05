@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Objects extends Model
 {
-    protected $table = 'Objects';
+    protected $table = 'objects';
     protected $primaryKey = 'id_team';
     public $timestamps = false;
 

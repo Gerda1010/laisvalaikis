@@ -29,7 +29,7 @@ class teamsController extends Controller
 
             ],
             [
-                'Name' =>'unique:Team|required|max:50',
+                'Name' =>'unique:team|required|max:50',
             ]
         );
         $validator2 = Validator::make(
