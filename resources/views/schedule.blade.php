@@ -30,6 +30,12 @@
                     </select>
                 </div>
             </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px">Data</label>
+                <div class="col-md-6">
+                   <input type="date" name="date">
+                </div>
+            </div>
             <div>
                 <button type="submit" id="buttonForm"class="btn btn-primary" style="alignment: right">
                     Rezervuoti
@@ -38,10 +44,27 @@
 
         </form>
     </div>
-
-    <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;">
+<br>
+    <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;width: 50%;height: 500px;overflow: auto;text-align:center">
         <br>
-   <h5 style="text-align: center; ">{{$mytime}}</h5>
+{{--   <h5 style="text-align: center; ">{{$mytime}}</h5>--}}
+{{--        <script>--}}
+{{--            var today = new Date().toISOString().split('T')[0];--}}
+{{--            document.getElementsByName("somedate")[0].setAttribute('min', today);--}}
+{{--        </script>--}}
+        <form method="post" action="{{action('scheduleController@byDate')}}">
+            @csrf
+            <input style="margin: auto;" name="somedate" type="date" value="{{$mytime}}" onchange="this.form.submit()"  min="{{now()->format('Y-m-d')}}" max="{{ now()->addDays(14)->format('Y-m-d') }}" >
+
+        </form>
+
+{{--        @foreach($allReservations as $rr)--}}
+{{--            @if($rr->reservation_Date===$mytime)--}}
+{{--                dd({{$mytime}});--}}
+{{--            @else--}}
+{{--              --}}
+{{--            @endif--}}
+{{--        @endforeach--}}
         <br>
      <table class="table" style="width: 95%; margin:0 auto;">
          <colgroup>
@@ -66,24 +89,24 @@
         <p>{{$time}}</p>
     </td>
     @foreach($allObjects as $obj)
-        @if(count($allReservations)===0)
-            <td style="background-color: seagreen; color: white">Laisva</td>
-        @else
     @foreach($allReservations as $res)
 
-        @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
+       @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
         <td style="background-color: darkred; color: white">Užimta</td>
-            @else
-                <td style="background-color: seagreen; color: white">Laisva</td>
-
+{{--            @else--}}
+{{--                <td style="background-color: seagreen; color: white">--}}
+{{--                    <a href="{{action('scheduleController@makeReservation',$time, $obj->id_Object, $mytime)}}">--}}
+{{--                        Laisva--}}
+{{--                    </a>--}}
+{{--                </td>--}}
+{{--        @break --}}
             @endif
-@break
-
     @endforeach
-        @endif
-
+        <td style="background-color: seagreen; color: white">
+            Laisva
+        </td>
+{{--        @endif--}}
                 @endforeach
-
 </tr>
     @endforeach
 
@@ -93,7 +116,7 @@
     </div>
 
 
-    </div>
+{{--    </div>--}}
 {{--    <div class="container">--}}
 {{--        <div>--}}
 {{--            <a class="btn btn-info pull-right" href="{{route('teams')}}">Create Appointment</a>--}}

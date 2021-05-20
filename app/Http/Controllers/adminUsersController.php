@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use App\Models\User;
 use App\Models\user_team;
 use Illuminate\Http\Request;
@@ -63,9 +64,14 @@ class adminUsersController extends Controller
     public function deleteUser($id)
     {
        $userTeams=user_team::where('fk_Userid_User','=',$id)->get();
+
 //        $userTeams=user_team::all();
         foreach ($userTeams as $usTm) {
             user_team::where('fk_Userid_User','=',$id)->delete();
+        }
+        $userReservations=Reservation::where('fk_Userid_User','=',$id)->get();
+        foreach ($userReservations as $usRes) {
+            Reservation::where('fk_Userid_User','=',$id)->delete();
         }
 
         User::where('id','=',$id)->delete();

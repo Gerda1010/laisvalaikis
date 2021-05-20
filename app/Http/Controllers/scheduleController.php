@@ -16,8 +16,19 @@ class scheduleController extends Controller
     public function index()
     {
         $mytime = Carbon::now()->format('Y-m-d');
+//        $mytime = $request->input('somedate');
+//        $datepicker = Carbon::now()->subDays(7)->format('Y-m-d')->first();
 //        $mytime->toFormattedDateString();
 //        $range = $this->hoursRange(28800,64800,60*30,'h:i a');
+        $allObjects = Objects::all();
+        $times = $this->get_hours_range();
+        $allReservations = Reservation::where('reservation_Date','=',$mytime)->get();
+        return view('schedule', compact('times', 'allObjects','mytime', 'allReservations'));
+    }
+    public function byDate(Request $request){
+
+        $mytime = $request->input('somedate');
+
         $allObjects = Objects::all();
         $times = $this->get_hours_range();
         $allReservations = Reservation::where('reservation_Date','=',$mytime)->get();
@@ -52,33 +63,46 @@ class scheduleController extends Controller
         }
         return $times;
     }
-    public function makeReservation(Request $request){
+    public function makeReservation(Request $request, $time, $obj,$mytime){
 
-        $validator = Validator::make(
-            [
-                'fk_Objectid_Object' =>$request->input('fk_Objectid_Object'),
-                'time'=>$request->input('time')
+//        $validator = Validator::make(
+//            [
+//                'fk_Objectid_Object' =>$request->input('fk_Objectid_Object'),
+//                'time'=>$request->input('time'),
+//                'date'=>$request->input('date')
+//
+//            ],
+//            [
+//                'fk_Objectid_Object' => 'required',
+//                'time' => 'required',
+//            ]
+//        );
+//        if ($validator->fails())
+//        {
+//            return Redirect::back()->withErrors($validator);
+//        }
+//        else
+//        {
+//            $newReservation = new Reservation();
+//            $newReservation->reservation_Date = Carbon::now()->format('Y-m-d');
+//            $newReservation->fk_Userid_User = Auth::user()->id;
+//
+//            $newReservation->fk_Objectid_Object = $request->input('fk_Objectid_Object');
+//            $newReservation->time = $request->input('time');
+//            $newReservation->reservation_Date = $request->input('date');;
+//            $newReservation->save();
+//        }
 
-            ],
-            [
-                'fk_Objectid_Object' => 'required',
-                'time' => 'required',
-            ]
-        );
-        if ($validator->fails())
-        {
-            return Redirect::back()->withErrors($validator);
-        }
-        else
-        {
-            $newReservation = new Reservation();
-            $newReservation->reservation_Date = Carbon::now()->format('Y-m-d');
+        $newReservation = new Reservation();
+            $newReservation->reservation_Date = $mytime;
             $newReservation->fk_Userid_User = Auth::user()->id;
 
-            $newReservation->fk_Objectid_Object = $request->input('fk_Objectid_Object');
-            $newReservation->time = $request->input('time');;
+            $newReservation->fk_Objectid_Object = $obj;
+            $newReservation->time = $time;
+
             $newReservation->save();
-        }
+
+
         return Redirect::back()->with('success', 'Laisvalaikio zona užrezervuota!');
 
 

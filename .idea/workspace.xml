@@ -20,11 +20,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bac0b54b-1659-4f92-923b-e704d867aa15" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Models/tournament_user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Game.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Game.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Objects.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Objects.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Obtained.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Obtained.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/State.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/State.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/adminObjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/adminObjectsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/adminUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/adminUsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/scheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/scheduleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/teamsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/teamsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/tournamentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/tournamentsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Team.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Team.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/custom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/createTournament.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/createTournament.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/test2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/test2.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/schedule.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/schedule.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/teams.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/teams.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/tournament.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tournament.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +199,10 @@
       <workItem from="1619255048379" duration="168253000" />
       <workItem from="1620038783494" duration="15034000" />
       <workItem from="1620149732283" duration="13557000" />
-      <workItem from="1620234508443" duration="3440000" />
+      <workItem from="1620234508443" duration="5663000" />
+      <workItem from="1620291944052" duration="1228000" />
+      <workItem from="1620670255727" duration="11616000" />
+      <workItem from="1621184168993" duration="38196000" />
     </task>
     <servers />
   </component>
@@ -202,6 +219,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2083" y="171" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1619117021476">
@@ -220,17 +238,18 @@
       <screen x="1366" y="0" width="1920" height="1170" />
     </state>
     <state x="2108" y="308" key="NewPhpClassDialog/0.0.1366.738/1366.0.1920.1170@1366.0.1920.1170" timestamp="1619867026336" />
-    <state x="2160" y="508" key="NewPhpFileDialog" timestamp="1620162580166">
+    <state x="2160" y="508" key="NewPhpFileDialog" timestamp="1621325421534">
       <screen x="1366" y="0" width="1920" height="1170" />
     </state>
-    <state x="2160" y="508" key="NewPhpFileDialog/0.0.1366.738/1366.0.1920.1170@1366.0.1920.1170" timestamp="1620162580166" />
+    <state x="2160" y="508" key="NewPhpFileDialog/0.0.1366.738/1366.0.1920.1170@1366.0.1920.1170" timestamp="1621325421534" />
     <state x="1458" y="92" width="1736" height="986" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1618929114179">
       <screen x="1366" y="0" width="1920" height="1170" />
     </state>
     <state x="1458" y="92" width="1736" height="986" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.738/1366.0.1920.1170@1366.0.1920.1170" timestamp="1618929114179" />
-    <state x="1989" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1619900707185">
-      <screen x="1366" y="0" width="1920" height="1170" />
+    <state x="443" y="162" width="672" height="428" key="search.everywhere.popup" timestamp="1621284365010">
+      <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="1989" y="257" width="672" height="678" key="search.everywhere.popup/0.0.1366.738/1366.0.1920.1170@1366.0.1920.1170" timestamp="1619900707185" />
+    <state x="1989" y="257" width="672" height="678" key="search.everywhere.popup/0.0.1366.738/1366.0.1920.1170@1366.0.1920.1170" timestamp="1620848019086" />
+    <state x="443" y="162" width="672" height="428" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1621284365010" />
   </component>
 </project>

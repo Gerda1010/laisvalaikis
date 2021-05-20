@@ -320,7 +320,9 @@ p {
 .itemT{
     grid-column: auto;
     margin-top: 15px;
+
 }
+
 /*small screen*/
 @media screen and (max-width: 812px) {
     .item1{

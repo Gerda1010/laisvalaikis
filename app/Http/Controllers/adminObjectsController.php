@@ -225,7 +225,7 @@ class adminObjectsController extends Controller
             ],
             [
                 'Name' =>'required|max:50',
-                'NumberOfMembers' =>'required',
+                'NumberOfMembers' =>'required|numeric',
                 'fk_Objectid_Object' => 'required'
             ]
         );

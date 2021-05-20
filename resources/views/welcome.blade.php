@@ -53,49 +53,49 @@
                 </div>
             <main>
                 <br>
-                <div class="grid-container" style="background-color: ghostwhite; border-radius: 15px;font-size: 16px;grid-gap: 10px;grid-template-columns: auto auto auto">
-                    <div class="item1">
-                        <label>
-                            <h3>Turnyrai</h3>
-                        </label>
+{{--                <div class="grid-container" style="background-color: ghostwhite; border-radius: 15px;font-size: 16px;grid-gap: 10px;grid-template-columns: auto auto auto">--}}
+{{--                    <div class="item1">--}}
+{{--                        <label>--}}
+{{--                            <h3>Turnyrai</h3>--}}
+{{--                        </label>--}}
 
-                        <table id="table" class="table table-hover table-condensed" >
-                            <thead>
-                            <tr>
-                                <th style="width:20%;border-bottom: 10px;">Pavadinimas</th>
-                                <th style="width:20%;border-bottom: 10px;">Žaidimas</th>
+{{--                        <table id="table" class="table table-hover table-condensed" >--}}
+{{--                            <thead>--}}
+{{--                            <tr>--}}
+{{--                                <th style="width:20%;border-bottom: 10px;">Pavadinimas</th>--}}
+{{--                                <th style="width:20%;border-bottom: 10px;">Žaidimas</th>--}}
 {{--                                <th style="width:30%;border-bottom: 10px;">Komandų skaičius</th>--}}
-                                <th style="width:30%;border-bottom: 10px;">Būsena</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($allTourn as $asTr)
-                                <tr>
-                                    <td>{{ $asTr->Name }}</td>
+{{--                                <th style="width:30%;border-bottom: 10px;">Būsena</th>--}}
+{{--                            </tr>--}}
+{{--                            </thead>--}}
+{{--                            <tbody>--}}
+{{--                            @foreach($allTourn as $asTr)--}}
+{{--                                <tr>--}}
+{{--                                    <td>{{ $asTr->Name }}</td>--}}
 
-                                    @foreach($allGames as $gme)
-                                        @if($gme->id_Game === $asTr->fk_Gameid_Game)
-                                            <td>{{ $gme->Name }}</td>
-                                        @endif
-                                    @endforeach
+{{--                                    @foreach($allGames as $gme)--}}
+{{--                                        @if($gme->id_Game === $asTr->fk_Gameid_Game)--}}
+{{--                                            <td>{{ $gme->Name }}</td>--}}
+{{--                                        @endif--}}
+{{--                                    @endforeach--}}
 
 {{--                                    <td>{{ $asTr->MaximumTeams }}</td>--}}
 
-                                    @foreach($allStates as $stt)
-                                        @if($stt->id_State === $asTr->State)
-                                            <td>{{ $stt->name }}</td>
+{{--                                    @foreach($allStates as $stt)--}}
+{{--                                        @if($stt->id_State === $asTr->State)--}}
+{{--                                            <td>{{ $stt->name }}</td>--}}
 
-                                        @endif
-                                    @endforeach
+{{--                                        @endif--}}
+{{--                                    @endforeach--}}
 
-                                </tr></a>
-                            @endforeach
-                            </tbody>
-                        </table>
-                        {{--            {{$allTourn->appends(request()->input())->links()}}--}}
-                    </div>
+{{--                                </tr></a>--}}
+{{--                            @endforeach--}}
+{{--                            </tbody>--}}
+{{--                        </table>--}}
+{{--                        --}}{{--            {{$allTourn->appends(request()->input())->links()}}--}}
+{{--                    </div>--}}
 
-                <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;">
+                <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;width: 50%;height: 500px;overflow: auto;">
                     <br>
                     <h5 style="text-align: center; ">{{$mytime}}</h5>
                     <br>
@@ -122,26 +122,31 @@
                                     <p>{{$time}}</p>
                                 </td>
                                 @foreach($allObjects as $obj)
-                                    @foreach($allReservations as $res)
+                                    @if(count($allReservations)===0)
+                                        <td style="background-color: seagreen; color: white">Laisva</td>
+                                    @else
+                                        @foreach($allReservations as $res)
 
-                                        @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
-                                            <td style="background-color: darkred; color: white">Užimta</td>
-                                        @else
-                                            <td style="background-color: seagreen; color: white">Laisva</td>
+                                            @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
+                                                <td style="background-color: darkred; color: white">Užimta</td>
+                                            @else
+                                                <td style="background-color: seagreen; color: white">Laisva</td>
 
-                                        @endif
-                                        @break
-                                    @endforeach
+                                            @endif
+                                            @break
+
+                                        @endforeach
+                                    @endif
+
                                 @endforeach
 
                             </tr>
                         @endforeach
 
-
                         </tbody>
                     </table>
                 </div>
-                </div>
+
 
             </main>
 

@@ -25,21 +25,21 @@
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px">Turnyro pradžios data</label>
                                 <div class="col-md-6">
-                                    <input type="date" class="form-control" name="StartDate" value="{{ old('StartDate') }}">
+                                    <input type="date" min="{{now()->format('Y-m-d')}}" class="form-control" name="StartDate" value="{{ old('StartDate') }}">
                                 </div>
                             </div>
 
-{{--                            <div class="form-group row">--}}
-{{--                                <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px; ">Event</label>--}}
-{{--                                <div class="col-md-6">--}}
-{{--                                    <select class="form-control" name="StartEvent">--}}
-{{--                                        <option value="{{ old('StartEvent') }}" ></option>--}}
-{{--                                        @foreach($StartEvents as $stEv)--}}
-{{--                                            <option value="{{$stEv->id_StartEvent}}">{{$stEv->name}}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px; ">Pradžios įvykis</label>
+                                <div class="col-md-6">
+                                    <select class="form-control" name="StartEvent">
+                                        <option value="{{ old('StartEvent') }}" ></option>
+                                        @foreach($StartEvents as $stEv)
+                                            <option value="{{$stEv->id_StartEvent}}">{{$stEv->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px;">Žaidimas</label>

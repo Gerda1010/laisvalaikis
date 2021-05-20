@@ -21,23 +21,6 @@ use App\Models\Tournament;
 |
 */
 
-//Route::get('/', function () {
-//    $allTourn = Tournament::where('State','=',3)
-//        ->orWhere('State','=', 5)
-//        ->get();
-//
-//    $allGames = Game::all();
-//    $allStates = State::all();
-//
-//    return view('welcome', compact('allTourn', 'allGames', 'allStates'));
-//});
-
-//Route::get('/dashboard', function () {
-////    $allTourn = Tournament::where('State','=',3)->orWhere('State','=', 5)->get();
-////    $allGames = Game::all();
-////    $allStates = State::all();
-//    return view('dashboard', compact('allTourn', 'allGames', 'allStates'));
-//})->middleware(['auth'])->name('dashboard');
 
 Route::get('/dashboard', 'homeController@index')->middleware(['auth'])->name('dashboard');
 Route::get('/', 'homeController@guest');
@@ -52,42 +35,51 @@ Route::get('send-email', [SendEmailController::class, 'index']);
 
 
 //Teams
-Route::get('/teams', 'teamsController@index');
-Route::get('/teamsRegistration', 'teamsController@teamsRegistration')->name('teamsRegistration');
-Route::post('/insertTeam', 'teamsController@insertTeam');
+Route::get('/teams', 'teamsController@index')->middleware(['auth']);
+Route::get('/teamsRegistration', 'teamsController@teamsRegistration')->middleware(['auth'])->name('teamsRegistration');
+Route::post('/insertTeam', 'teamsController@insertTeam')->middleware(['auth']);
 
 Route::resource('appointments', 'AppointmentsController');
 //Tournaments
-Route::get('/tournaments', 'tournamentsController@index');
-Route::get('/createTournament', 'tournamentsController@createTournament');
-Route::post('/insertTournament', 'tournamentsController@insertTournament')->name('insertTournament');
-Route::get('/tournament/{id}', 'tournamentsController@openTournament');
+Route::get('/tournaments', 'tournamentsController@index')->middleware(['auth']);
+
+//Route::get('/tournaments', 'tournamentsController@index');
+Route::get('/createTournament', 'tournamentsController@createTournament')->middleware(['auth']);
+Route::post('/insertTournament', 'tournamentsController@insertTournament')->middleware(['auth'])->name('insertTournament');
+Route::get('/tournament/{id}', 'tournamentsController@openTournament')->middleware(['auth']);
 //Route::get('/registerToTournament', 'tournamentsController@registerToTournament');
-Route::post('/createTournamentTeam/{id}', 'tournamentsController@createTournamentTeam')->name('createTournamentTeam');
-Route::get('/createTournamentTeam/{id}', 'tournamentsController@createTournamentTeam');
-Route::post('/comment/{id}', 'tournamentsController@insertComment')->name('insertComment');
+Route::post('/createTournamentTeam/{id}', 'tournamentsController@createTournamentTeam')->middleware(['auth'])->name('createTournamentTeam');
+Route::get('/createTournamentTeam/{id}', 'tournamentsController@createTournamentTeam')->middleware(['auth']);
+
+Route::post('/createTournamentUser/{id}', 'tournamentsController@createTournamentUser')->middleware(['auth'])->name('createTournamentUser');
+Route::get('/createTournamentUser/{id}', 'tournamentsController@createTournamentUser')->middleware(['auth']);
+
+Route::post('/comment/{id}', 'tournamentsController@insertComment')->middleware(['auth'])->name('insertComment');
 
 //Route::get('/startTournament/{id}', 'tournamentsController@startTournament')->name('startTournament');
-Route::post('/startTournament/{id}', 'tournamentsController@startTournament')->name('startTournament');
-Route::post('/insertResult/{id}','tournamentsController@insertResult')->name('insertResult');
+Route::post('/startTournament/{id}', 'tournamentsController@startTournament')->middleware(['auth'])->name('startTournament');
+Route::post('/insertResult/{id}','tournamentsController@insertResult')->middleware(['auth'])->name('insertResult');
 
 
 
 
 //Profile
-Route::get('/profile', 'profileController@index');
-Route::get('/reservations/{id}', 'profileController@cancelReservation')->name('cancelReservation');
+Route::get('/profile', 'profileController@index')->middleware(['auth']);
+Route::get('/reservations/{id}', 'profileController@cancelReservation')->middleware(['auth'])->name('cancelReservation');
 
-Route::get('change-password', 'profileController@changePassword');
+Route::get('change-password', 'profileController@changePassword')->middleware(['auth']);
 
-Route::post('change-password', 'profileController@store')->name('change.password');
+Route::post('change-password', 'profileController@store')->middleware(['auth'])->name('change.password');
 
 
 
 //Schedule
 Route::get('/schedule', 'scheduleController@index');
-Route::post('/makeReservation', 'scheduleController@makeReservation');
+//Route::post('/makeReservation{time}/object{obj}/date{mytime}', 'scheduleController@makeReservation')->middleware(['auth']);
+//Route::get('/makeReservation{time}/object{obj}/date{mytime}', 'scheduleController@makeReservation')->middleware(['auth']);
 
+Route::post('/byDate', 'scheduleController@byDate')->name('byDate');
+Route::get('/byDate', 'scheduleController@byDate')->name('byDate');
 
 //Admino useriams
 Route::get('/userList', 'adminUsersController@index');

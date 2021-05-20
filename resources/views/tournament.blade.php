@@ -5,7 +5,12 @@
 <br>
 <div class="row" style="margin-left: 7px">
     @if($Tournament->State===3)
-    <button id="myBtn" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px; ">Užsiregistruoti</button>
+
+    @if($maxTeams->NumberOfMembers>1)
+            <button id="myBtn" onclick="document.getElementById('myModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px; ">Užsiregistruoti</button>
+        @else
+        <button id="singleModalbtn" onclick="document.getElementById('singleModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px;">vienammm</button>
+        @endif
 
 @if($Tournament->fk_Organizerid_User===Auth::user()->id)
     <form action="{{ route('startTournament',$Tournament->id_Tournament)}}"  method="post">
@@ -14,7 +19,8 @@
     </form>
         @endif
     @else
-        <button id="myBtn" style="background-color: dimgray;  color: white; margin-left: 20px;border-radius: 5px; " disabled>Užsiregistruoti</button>
+        <button id="myBtnDis" style="background-color: dimgray;  color: white; margin-left: 20px;border-radius: 5px; " disabled>Užsiregistruoti</button>
+        <button id="singleModalbtnDis" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px;" disabled>vienammm</button>
 
 
         <form action="{{ route('startTournament',$Tournament->id_Tournament)}}"  method="post">
@@ -22,7 +28,7 @@
             <input type="submit" disabled value="Pradėti turnyrą" style="background-color: dimgray; color: white; margin-left: 20px;border-radius: 5px; border: none; height: 35px" />
         </form>
     @endif
-        <button id="logBtn" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px; ">Turnyro istorija</button>
+        <button id="logBtn" onclick="document.getElementById('logModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px; ">Turnyro istorija</button>
 </div>
     <br>
 {{--Modalas--}}
@@ -34,7 +40,7 @@
             <div class="modal-header" style="alignment: left">
 
                 <h2 >Pasirinkite komandą</h2>
-                <span class="close2">&times;</span>
+                <span class="close" id="spanId">&times;</span>
             </div>
 
             <form class="form-horizontal" role="form" method="POST" action="{{ url('createTournamentTeam',$Tournament->id_Tournament)}}">
@@ -69,7 +75,7 @@
         <div class="modal-header" style="alignment: left">
 
             <h2 >Turnyro istorija</h2>
-            <span class="close">&times;</span>
+            <span class="close" id="spanId2">&times;</span>
         </div>
 
             <div class="form-group row">
@@ -107,6 +113,25 @@
 
     </div>
 </div>
+<div id="singleModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header" style="alignment: left">
+
+            <span class="close" id="spanId3">&times;</span>
+        </div>
+        <form class="form-horizontal" role="form" method="POST" action="{{ url('createTournamentUser',$Tournament->id_Tournament)}}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <label >Ar tikrai norite užsiregistruoti?</label>
+            <button type="submit">
+                Registruotis
+            </button>
+        </form>
+
+
+    </div>
+</div>
 {{--    Modalas--}}
 
 {{--<div class="container-fluid" >--}}
@@ -116,7 +141,11 @@
         <div class="item1">
     <label>
         <h3 class="title">{{$Tournament->Name}}</h3>
+
+{{--        <h1>{{$maxTeams->NumberOfMembers}}</h1>--}}
+
     </label>
+
 
 
             <div align="left" style="font-size: 1rem;font-weight: bolder">
@@ -193,47 +222,33 @@
             </colgroup>
 
             <tbody>
-
-{{--                @foreach($allTournTeams as $tt)--}}
-{{--                    @foreach($allTeams as $team)--}}
-{{--                        <tr>--}}
-{{--                        @if($tt->fk_Teamid_Team === $team->id_Team)--}}
-{{--                                <td style="width: 70%;"> {{$team->Name}} </td>--}}
-{{--                            @if()--}}
-
-{{--                      --}}
-{{--                            <td style="width: 30%;">{{$tt->victories}} </td>--}}
-
-
-{{--                            @endif--}}
-{{--                                @break--}}
-{{--                            @endforeach--}}
-{{--                        </tr>--}}
-
-{{--                    @endforeach--}}
-{{--                   --}}
-{{--                @endforeach--}}
-@foreach($allTournTeams as $tt)
-
-        <tr>
+{{--            @if($maxTeams->NumberOfMembers>1)--}}
+                @foreach($allTournTeams as $tt)
+                  <tr>
             @foreach($allTeams as $team)
                 @if($tt->fk_Teamid_Team === $team->id_Team)
                     <td style="width: 70%;"> {{$team->Name}}  </td>
                 @endif
             @endforeach
-
-
-
-
-
-
                     <td style="width: 30%;">{{$tt->victories}} </td>
 
-        </tr>
+                           </tr>
+            @endforeach
+{{--            @else--}}
+{{--                @foreach($allTournUsers as $tu)--}}
+{{--                    <tr>--}}
+{{--                        @foreach($allUsers as $user)--}}
+{{--                            @if($tu->fk_Userid_User === $user->id)--}}
+{{--                                <td style="width: 70%;"> {{$user->name}}  </td>--}}
+{{--                            @endif--}}
+{{--                        @endforeach--}}
+{{--                        <td style="width: 30%;">{{$tu->victories}} </td>--}}
+
+{{--                    </tr>--}}
+{{--                @endforeach--}}
 
 
-
-@endforeach
+{{--            @endif--}}
 
 
             </tbody>
@@ -278,12 +293,9 @@
 
                 <button type="submit" class="btn btn-primary" id= "buttonForm" style="background-color: darkslategray; color: white; margin-top:15px;margin-bottom: 15px;border-radius: 10px; ">Pateikti</button>
             </form>
-
-
         </div>
     <div class="item4">
     <div class="grid-container">
-
 
         @foreach($allMatches as $mat)
             <div style="background-color: #4a5568;color: white;font-size: 16px;padding: 10px;">
@@ -297,9 +309,9 @@
 
                         <td>{{$tt1->pavad1}}</td>
 {{--                        <td>{{$mat->id_team_match}}</td>--}}
-                        @if($mat->result1=== null)
+                        @if(($mat->result1=== null)||($Tournament->fk_Organizerid_User===Auth::user()->id))
                                 <td>
-                                        <input type="number" id="quantity2" name="result1" min="1" max="9" style="border-radius: 7px;margin-left: 10px; color: black">
+                                        <input type="number" id="quantity2" name="result1" min="0" max="9" value="{{$mat->result1}}" style="border-radius: 7px;margin-left: 10px; color: black">
 {{--                                        <input type="submit">--}}
                                 </td>
                                 @else
@@ -319,9 +331,9 @@
                             @if($mat->fk_Team2===$tt2->komid2)
 
                         <td>{{$tt2->pavad2}}</td>
-                            @if($mat->result2=== null)
+                            @if(($mat->result2=== null)||($Tournament->fk_Organizerid_User===Auth::user()->id))
                                 <td>
-                                        <input type="number"  id="quantity2" name="result2" min="1" max="9" style="border-radius: 7px;margin-left: 10px;alignment: right; color: black">
+                                        <input type="number"  id="quantity2" value="{{$mat->result2}}" name="result2" min="0" max="9" style="border-radius: 7px;margin-left: 10px;alignment: right; color: black">
                                 </td>
                                 @else
                                     <td style=" text-align: center; color: white; font-weight: bolder; width: 30px; padding-left: 20px">
@@ -334,6 +346,7 @@
                         @endforeach
                     </tr>
                     <tr >
+                        <td></td>
 
                         <td>
 {{--                                <button type="submit" id="matchBtn" class="btn btn-primary"">--}}
@@ -345,10 +358,11 @@
 {{--                          });--}}
 
 {{--                      </script>--}}
-
+                            @if((($mat->result1 === null) &&($mat->result2 === null))||($Tournament->fk_Organizerid_User===Auth::user()->id))
                             <input type="submit" id="matchSave" value="Save" style="background-color: ghostwhite; color: black; border-radius: 5px; " />
 
 {{--                            <input type="submit" style="color: #1a202c">--}}
+                                @endif
                         </td>
                     </tr>
 
@@ -368,3 +382,4 @@
         </div>
 
 @endsection
+

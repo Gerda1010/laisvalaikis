@@ -26,7 +26,6 @@ class teamsController extends Controller
     {
         $validator = Validator::make(
             [   'Name' =>$request->input('Name'),
-
             ],
             [
                 'Name' =>'unique:team|required|max:50',
@@ -66,7 +65,12 @@ class teamsController extends Controller
 
             $newTeam = new Team();
             $newTeam->Name = $request->input('Name');
-         //   $tmp=$newTeam->Name;
+
+            if($request->input('fk_Userid_User2')==null){
+                $newTeam->members = 2;
+            }
+            else
+                $newTeam->members = 3;
 
             $newTeam->save();
 
@@ -86,11 +90,6 @@ class teamsController extends Controller
                 $newUserTeam2->fk_Teamid_Team  = $newTeam->id_team;
                 $newUserTeam2->save();
             }
-
-
-
-
-
         }
         return Redirect::to('/teams')->with('success', 'Komanda sukurta!');
     }

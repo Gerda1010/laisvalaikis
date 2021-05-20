@@ -2,7 +2,7 @@
 
 @section('content')
     <br>
-    <div class="grid-container" style="background-color: ghostwhite; border-radius: 15px;font-size: 16px">
+    <div class="grid-container" style="font-size: 16px">
         <div class="itemT">
        <br>
         <label>
@@ -45,8 +45,8 @@
             {{--            {{$allTourn->appends(request()->input())->links()}}--}}
 
     </div>
-        <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;">
-            <br>
+        <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto; height: 500px;overflow: auto;">
+
             <h5 style="text-align: center; ">{{$mytime}}</h5>
             <br>
             <table class="table" style="width: 95%; margin:0 auto;">
@@ -72,16 +72,22 @@
                             <p>{{$time}}</p>
                         </td>
                         @foreach($allObjects as $obj)
-                            @foreach($allReservations as $res)
+                            @if(count($allReservations)===0)
+                                <td style="background-color: seagreen; color: white">Laisva</td>
+                            @else
+                                @foreach($allReservations as $res)
 
-                                @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
-                                    <td style="background-color: darkred; color: white">Užimta</td>
-                                @else
-                                    <td style="background-color: seagreen; color: white">Laisva</td>
+                                    @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
+                                        <td style="background-color: darkred; color: white">Užimta</td>
+                                    @else
+                                        <td style="background-color: seagreen; color: white">Laisva</td>
 
-                                @endif
-                                @break
-                            @endforeach
+                                    @endif
+                                    @break
+
+                                @endforeach
+                            @endif
+
                         @endforeach
 
                     </tr>

@@ -10,5 +10,5 @@ class Team extends Model
     protected $primaryKey = 'id_team';
     public $timestamps = false;
 
-    protected $fillable = ['Name', 'WonTournaments'];
+    protected $fillable = ['Name', 'WonTournaments','members'];
 }
