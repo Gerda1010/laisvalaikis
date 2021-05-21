@@ -3,49 +3,49 @@
 
 @section('content')
     <div class="grid-container">
-    <div class="itemT">
-        <form class="form-horizontal" role="form" method="POST" action="{{ url('makeReservation')}}">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+{{--    <div class="itemT">--}}
+{{--        <form class="form-horizontal" role="form" method="POST" action="{{ url('makeReservation')}}">--}}
+{{--            <input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
 
-            <div class="form-group row">
-                <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px">Laisvalaikio zona</label>
-                <div class="col-md-6">
-                    <select class="form-control" name="fk_Objectid_Object">
-                        <option value="{{ old('fk_Objectid_Object') }}" ></option>
-                        @foreach($allObjects as $obj)
-                            <option value="{{$obj->id_Object}}">{{$obj->Name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+{{--            <div class="form-group row">--}}
+{{--                <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px">Laisvalaikio zona</label>--}}
+{{--                <div class="col-md-6">--}}
+{{--                    <select class="form-control" name="fk_Objectid_Object">--}}
+{{--                        <option value="{{ old('fk_Objectid_Object') }}" ></option>--}}
+{{--                        @foreach($allObjects as $obj)--}}
+{{--                            <option value="{{$obj->id_Object}}">{{$obj->Name}}</option>--}}
+{{--                        @endforeach--}}
+{{--                    </select>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
-            <div class="form-group row">
-                <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px">Laikas</label>
-                <div class="col-md-6">
-                    <select class="form-control" name="time">
-                        <option value="{{ old('time') }}" ></option>
-                        @foreach($times as $time)
-                            <option value="{{$time}}">{{$time}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px">Data</label>
-                <div class="col-md-6">
-                   <input type="date" name="date">
-                </div>
-            </div>
-            <div>
-                <button type="submit" id="buttonForm"class="btn btn-primary" style="alignment: right">
-                    Rezervuoti
-                </button>
-            </div>
+{{--            <div class="form-group row">--}}
+{{--                <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px">Laikas</label>--}}
+{{--                <div class="col-md-6">--}}
+{{--                    <select class="form-control" name="time">--}}
+{{--                        <option value="{{ old('time') }}" ></option>--}}
+{{--                        @foreach($times as $time)--}}
+{{--                            <option value="{{$time}}">{{$time}}</option>--}}
+{{--                        @endforeach--}}
+{{--                    </select>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="form-group row">--}}
+{{--                <label class="col-md-4 col-form-label text-md-right" style="margin-left: 30px">Data</label>--}}
+{{--                <div class="col-md-6">--}}
+{{--                   <input type="date" name="date">--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div>--}}
+{{--                <button type="submit" id="buttonForm"class="btn btn-primary" style="alignment: right">--}}
+{{--                    Rezervuoti--}}
+{{--                </button>--}}
+{{--            </div>--}}
 
-        </form>
-    </div>
+{{--        </form>--}}
+{{--    </div>--}}
 <br>
-    <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;width: 50%;height: 500px;overflow: auto;text-align:center">
+    <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;width: 100%;height: 500px;overflow: auto;text-align:center">
         <br>
 {{--   <h5 style="text-align: center; ">{{$mytime}}</h5>--}}
 {{--        <script>--}}
@@ -83,30 +83,50 @@
          </thead>
 
 <tbody>
+
     @foreach($times as $time)
 <tr>
     <td style="width: 20%">
         <p>{{$time}}</p>
     </td>
-    @foreach($allObjects as $obj)
-    @foreach($allReservations as $res)
 
+        @foreach($allObjects as $obj)
+        @php
+            $val = 0
+        @endphp
+            @foreach($allReservations as $res)
        @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
         <td style="background-color: darkred; color: white">Užimta</td>
-{{--            @else--}}
-{{--                <td style="background-color: seagreen; color: white">--}}
-{{--                    <a href="{{action('scheduleController@makeReservation',$time, $obj->id_Object, $mytime)}}">--}}
-{{--                        Laisva--}}
-{{--                    </a>--}}
-{{--                </td>--}}
-{{--        @break --}}
+
+         @php
+         $val = 1
+            @endphp
+                @break
+            @else
+
+           @continue
+
             @endif
-    @endforeach
-        <td style="background-color: seagreen; color: white">
-            Laisva
-        </td>
+        @endforeach
+    @if($val != 1)
+                <td style="background-color: seagreen; color: white">
+
+            <a style="height: 50px;padding: 0" onclick="return confirm('Patvirtinkite rezervaciją')" href="{{action('scheduleController@makeReservation',['time'=> $time, 'obj'=>$obj->id_Object, 'mytime'=>$mytime])}}">
+                    Laisva
+                    </a>
+                </td>
+                @endif
+{{--            <td style="background-color: seagreen; color: white">--}}
+{{--                --}}
+{{--                    Laisva--}}
+{{--                </a>--}}
+{{--            </td>--}}
+
+
 {{--        @endif--}}
                 @endforeach
+
+
 </tr>
     @endforeach
 

@@ -4,31 +4,34 @@
 
 <br>
 <div class="row" style="margin-left: 7px">
-    @if($Tournament->State===3)
+    @if($Tournament->State===6)
 
     @if($maxTeams->NumberOfMembers>1)
             <button id="myBtn" onclick="document.getElementById('myModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px; ">Užsiregistruoti</button>
         @else
-        <button id="singleModalbtn" onclick="document.getElementById('singleModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px;">vienammm</button>
+        <button id="singleModalbtn" onclick="document.getElementById('singleModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px;">Užsiregistruoti</button>
         @endif
 
-@if($Tournament->fk_Organizerid_User===Auth::user()->id)
-    <form action="{{ route('startTournament',$Tournament->id_Tournament)}}"  method="post">
-        {{ csrf_field() }}
-        <input type="submit" value="Pradėti turnyrą" style="background-color: darkslategray;  color: white; margin-left: 20px;border-radius: 5px; border: none; height: 35px" />
-    </form>
+        @if($Tournament->fk_Organizerid_User===Auth::user()->id)
+            <form action="{{ route('startTournament',$Tournament->id_Tournament)}}"  method="post">
+                {{ csrf_field() }}
+                <input type="submit" value="Pradėti turnyrą" style="background-color: darkslategray;  color: white; margin-left: 20px;border-radius: 5px; border: none; height: 35px" />
+            </form>
         @endif
     @else
-        <button id="myBtnDis" style="background-color: dimgray;  color: white; margin-left: 20px;border-radius: 5px; " disabled>Užsiregistruoti</button>
-        <button id="singleModalbtnDis" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px;" disabled>vienammm</button>
 
+        @if($maxTeams->NumberOfMembers>1)
+            <button id="myBtnDis" style="background-color: dimgray; color: white; margin-left: 20px;border-radius: 5px; " disabled>Užsiregistruoti</button>
+        @else
+            <button id="singleModalbtnDis" disabled style="background-color: dimgray; color: white; margin-left: 20px;border-radius: 5px;">Užsiregistruoti</button>
+        @endif
 
         <form action="{{ route('startTournament',$Tournament->id_Tournament)}}"  method="post">
             {{ csrf_field() }}
             <input type="submit" disabled value="Pradėti turnyrą" style="background-color: dimgray; color: white; margin-left: 20px;border-radius: 5px; border: none; height: 35px" />
         </form>
     @endif
-        <button id="logBtn" onclick="document.getElementById('logModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px; ">Turnyro istorija</button>
+    <button id="logBtn" onclick="document.getElementById('logModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px; ">Turnyro istorija</button>
 </div>
     <br>
 {{--Modalas--}}
@@ -116,15 +119,16 @@
 <div id="singleModal" class="modal">
 
     <!-- Modal content -->
-    <div class="modal-content">
+    <div class="modal-content" >
         <div class="modal-header" style="alignment: left">
-
+            <h3 >Ar tikrai norite užsiregistruoti?</h3>
             <span class="close" id="spanId3">&times;</span>
         </div>
         <form class="form-horizontal" role="form" method="POST" action="{{ url('createTournamentUser',$Tournament->id_Tournament)}}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <label >Ar tikrai norite užsiregistruoti?</label>
-            <button type="submit">
+
+            <br></br>
+            <button type="submit" style="background-color: darkslategray; color: white; margin-top:15px;margin-bottom: 15px;border-radius: 10px; margin: auto;">
                 Registruotis
             </button>
         </form>
@@ -213,7 +217,7 @@
 {{--            </div>--}}
     <div class="item2" style="font-size: 1rem;font-weight: bolder">
         <label>
-            <h3 class="title">Komandos</h3>
+            <h3 class="title">Dalyviai</h3>
         </label>
         <table class= "table" style="width: 100%" >
             <colgroup>
@@ -223,6 +227,7 @@
 
             <tbody>
 {{--            @if($maxTeams->NumberOfMembers>1)--}}
+@if($maxTeams->NumberOfMembers>1)
                 @foreach($allTournTeams as $tt)
                   <tr>
             @foreach($allTeams as $team)
@@ -234,22 +239,19 @@
 
                            </tr>
             @endforeach
-{{--            @else--}}
-{{--                @foreach($allTournUsers as $tu)--}}
-{{--                    <tr>--}}
-{{--                        @foreach($allUsers as $user)--}}
-{{--                            @if($tu->fk_Userid_User === $user->id)--}}
-{{--                                <td style="width: 70%;"> {{$user->name}}  </td>--}}
-{{--                            @endif--}}
-{{--                        @endforeach--}}
-{{--                        <td style="width: 30%;">{{$tu->victories}} </td>--}}
+@else
+                    @foreach($allTournUsers as $tu)
+                        <tr>
+                            @foreach($allUsers as $user)
+                                @if($tu->fk_Userid_User === $user->id)
+                                    <td style="width: 70%;"> {{$user->name}}  </td>
+                                @endif
+                            @endforeach
+                            <td style="width: 30%;">{{$tu->victories}} </td>
+                        </tr>
+                    @endforeach
 
-{{--                    </tr>--}}
-{{--                @endforeach--}}
-
-
-{{--            @endif--}}
-
+@endif
 
             </tbody>
 
@@ -296,6 +298,8 @@
         </div>
     <div class="item4">
     <div class="grid-container">
+
+        @if($maxTeams->NumberOfMembers>1)
 
         @foreach($allMatches as $mat)
             <div style="background-color: #4a5568;color: white;font-size: 16px;padding: 10px;">
@@ -349,15 +353,7 @@
                         <td></td>
 
                         <td>
-{{--                                <button type="submit" id="matchBtn" class="btn btn-primary"">--}}
-{{--                                    Išsaugoti--}}
-{{--                                </button>--}}
-{{--                      <script>--}}
-{{--                          $("#submit").on("click", function() {--}}
-{{--                              $("#quantity1").attr("disabled", "disabled");--}}
-{{--                          });--}}
-
-{{--                      </script>--}}
+{
                             @if((($mat->result1 === null) &&($mat->result2 === null))||($Tournament->fk_Organizerid_User===Auth::user()->id))
                             <input type="submit" id="matchSave" value="Save" style="background-color: ghostwhite; color: black; border-radius: 5px; " />
 
@@ -373,8 +369,75 @@
     </div>
         @endforeach
 
+        @else
+            @foreach($allMatchesUser as $mat)
+                <div style="background-color: #4a5568;color: white;font-size: 16px;padding: 10px;">
+                    <form action="{{ route('insertResult',$mat->id_Match)}}"  method="post" id="matchForm" >
+                        {{ csrf_field() }}
+                        <table>
+                            <tbody>
+                            @foreach($tournUsers1 as $tu1)
+                                <tr>
+                                    @if($mat->fk_Participantid_User===$tu1->userid)
+
+                                        <td>{{$tu1->vardas1}}</td>
+                                        {{--                        <td>{{$mat->id_team_match}}</td>--}}
+                                        @if(($mat->result1=== null)||($Tournament->fk_Organizerid_User===Auth::user()->id))
+                                            <td>
+                                                <input type="number" id="quantity2" name="result1" min="0" max="9" value="{{$mat->result1}}" style="border-radius: 7px;margin-left: 10px; color: black">
+                                                {{--                                        <input type="submit">--}}
+                                            </td>
+                                        @else
+                                            <td style=" text-align: center; color: white; font-weight: bolder; width: 30px; padding-left: 20px">
+                                                <h6 style="margin-bottom: 0;">{{$mat->result1}}</h6>
+                                                {{--                                        <input type="submit">--}}
+                                            </td>
 
 
+                                        @endif
+                                        @break
+                                    @endif
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    @foreach($tournUsers2 as $tu2)
+                                        @if($mat->fk_Participantid_User1===$tu2->userid2)
+
+                                            <td>{{$tu2->vardas2}}</td>
+                                            @if(($mat->result2=== null)||($Tournament->fk_Organizerid_User===Auth::user()->id))
+                                                <td>
+                                                    <input type="number"  id="quantity2" value="{{$mat->result2}}" name="result2" min="0" max="9" style="border-radius: 7px;margin-left: 10px;alignment: right; color: black">
+                                                </td>
+                                            @else
+                                                <td style=" text-align: center; color: white; font-weight: bolder; width: 30px; padding-left: 20px">
+                                                    <h6 style="margin-bottom: 0;">{{$mat->result2}}</h6>
+                                                </td>
+                                            @endif
+                                            @break
+
+                                        @endif
+                                    @endforeach
+                                </tr>
+                                <tr >
+                                    <td></td>
+
+                                    <td>
+
+                                        @if((($mat->result1 === null) &&($mat->result2 === null))||($Tournament->fk_Organizerid_User===Auth::user()->id))
+                                            <input type="submit" id="matchSave" value="Save" style="background-color: ghostwhite; color: black; border-radius: 5px; " />
+
+                                            {{--                            <input type="submit" style="color: #1a202c">--}}
+                                        @endif
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            @endforeach
+@endif
 
 
 </div>

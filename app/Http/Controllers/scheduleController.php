@@ -63,7 +63,7 @@ class scheduleController extends Controller
         }
         return $times;
     }
-    public function makeReservation(Request $request, $time, $obj,$mytime){
+    public function makeReservation(Request $request, $time, $obj, $mytime){
 
 //        $validator = Validator::make(
 //            [

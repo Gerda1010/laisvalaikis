@@ -14,6 +14,7 @@ use App\Models\tournament_team;
 use App\Models\tournament_user;
 use App\Models\User;
 use App\Models\user_team;
+use App\Models\UserMatch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +65,8 @@ class tournamentsController extends Controller
         $allTournUsers = tournament_user::where('fk_Tournamentid_Tournament','=', $id)->orderBy('victories', 'desc')->get();
 
         $allMatches = Matches::where('fk_Tournamentid_Tournament','=', $id)->get();
+        $allMatchesUser = UserMatch::where('fk_Tournamentid_Tournament','=', $id)->get();
+
       //  $tournTeams = Team::where('fk_Tournamentid_Tournament','=', $id)->get();
 
        $tournTeams1 = Matches::join('Team','Matches.fk_Team1','=','Team.id_Team')
@@ -74,6 +77,19 @@ class tournamentsController extends Controller
             ->select('Team.Name as pavad2','Team.id_Team as komid2','Matches.*')
             ->distinct()
             ->get(['komid2']);
+        $tournUsers1 = UserMatch::join('Users', 'UserMatch.fk_Participantid_User','=','Users.id')
+            ->select('Users.name as vardas1','Users.id as userid','UserMatch.*')
+            ->distinct(['userid'])
+            ->get();
+        $tournUsers2 = UserMatch::join('Users', 'UserMatch.fk_Participantid_User1','=','Users.id')
+            ->select('Users.name as vardas2','Users.id as userid2','UserMatch.*')
+            ->distinct(['userid2'])
+            ->get();
+
+
+
+
+
 
         $komandos = tournament_team::where('fk_Tournamentid_Tournament','=',36)->orderby('victories','desc')->first();
 //        $test = DB::table('matches') DISTINCT
@@ -81,7 +97,7 @@ class tournamentsController extends Controller
 
 
 
-        return view('tournament', compact('Tournament','komandos','maxTeams','allTeams', 'allUserTeams','logs','allUsers', 'allGames', 'allStates', 'allTournTeams', 'allTournUsers','allComments','allMatches','tournTeams1','tournTeams2'));
+        return view('tournament', compact('Tournament','komandos','tournUsers1','tournUsers2','maxTeams','allTeams','allMatchesUser', 'allUserTeams','logs','allUsers', 'allGames', 'allStates', 'allTournTeams', 'allTournUsers','allComments','allMatches','tournTeams1','tournTeams2'));
     }
     public function insertTournament(Request $request)
     {
@@ -119,7 +135,7 @@ class tournamentsController extends Controller
             $newTourn->fk_Gameid_Game = $request->input('fk_Gameid_Game');
 
             $newTourn->fk_Organizerid_User = Auth::user()->id;
-            $newTourn->State = '3';
+            $newTourn->State = '6';
 
             $newTourn->save();
 
@@ -190,7 +206,7 @@ class tournamentsController extends Controller
         $usersCount = tournament_user::where('fk_Tournamentid_Tournament', '=',$id)->count();
         $turnyras = Tournament::where('id_Tournament','=',$id)->first();
         if($usersCount==$turnyras->MaximumTeams){
-            return $this->startTournament($id);
+            return $this->startTournamentUsers($id);
         }
         else
             return back()->with('success', 'Jūs užsiregistravote!');
@@ -271,6 +287,47 @@ class tournamentsController extends Controller
         $newLog->fk_Userid_User = Auth::user()->id;
         $newLog->save();
         return back()->with('success', 'Turnyras pradėtas!');
+    }
+    public function startTournamentUsers($id){
+
+        $newMatch= new UserMatch();
+        $newMatch->fk_Tournamentid_Tournament= $id;
+        $newMatch->fk_Participantid_User=5;
+        $newMatch->fk_Participantid_User1=2;
+        $newMatch->result1=2;
+        $newMatch->result2 = 3;
+        $newMatch->winner = 2;
+        $newMatch->save();
+
+        $allusers = DB::table('tournament_user')
+            ->select(DB::raw('fk_Userid_User'))
+            ->where('fk_Tournamentid_Tournament', '=', $id)
+            ->get();
+        $allusers->toArray();
+
+        for($i=0;$i<count($allusers)-1;$i++){
+            for($y=$i+1;$y<count($allusers);$y++){
+
+                $newMatch1= new UserMatch();
+                $newMatch1->fk_Tournamentid_Tournament= $id;
+                $newMatch1->fk_Participantid_User=$allusers[$i]->fk_Userid_User;
+                $newMatch1->fk_Participantid_User1=$allusers[$y]->fk_Userid_User;
+                $newMatch1->save();
+            }
+        }
+        Tournament::where('id_Tournament', '=', $id)->update(
+            [
+                'State'=> '5',
+            ]
+        );
+        $newLog = new event_log();
+        $newLog->log_date = Carbon::now();
+        $newLog->log_text = "Pradėjo turnyrą";
+        $newLog->fk_Tournament = $id;
+        $newLog->fk_Userid_User = Auth::user()->id;
+        $newLog->save();
+        return back()->with('success', 'Turnyras pradėtas!');
+
     }
 
     public function insertResult(Request $request,$id){

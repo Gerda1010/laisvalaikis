@@ -20,6 +20,12 @@ body{
     border-radius: 0;
 
 }
+td a {
+    display:block;
+    width:100%;
+    color: white;
+
+}
 
 
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */

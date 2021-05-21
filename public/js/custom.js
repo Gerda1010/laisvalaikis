@@ -1,5 +1,5 @@
 // Get the modal
-document.addEventListener('DOMContentLoaded', function() {
+// document.addEventListener('DOMContentLoaded', function() {
     // var modal = document.getElementById("myModal");
 // // Get the button that opens the modal
 //     var btn = document.getElementById("myBtn");
@@ -136,4 +136,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var today = new Date().toISOString().split('T')[0];
     document.getElementsByName("somedate")[0].setAttribute('min', today);
-});
+// });

@@ -20,24 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bac0b54b-1659-4f92-923b-e704d867aa15" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Models/tournament_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/UserMatch.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/adminObjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/adminObjectsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/adminUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/adminUsersController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/scheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/scheduleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/teamsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/teamsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/tournamentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/tournamentsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Team.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Team.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/custom.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/custom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/createTournament.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/createTournament.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/test2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/test2.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/profile.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/schedule.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/schedule.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/teams.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/teams.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/tournament.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tournament.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -202,7 +193,7 @@
       <workItem from="1620234508443" duration="5663000" />
       <workItem from="1620291944052" duration="1228000" />
       <workItem from="1620670255727" duration="11616000" />
-      <workItem from="1621184168993" duration="38196000" />
+      <workItem from="1621184168993" duration="54874000" />
     </task>
     <servers />
   </component>
@@ -238,10 +229,10 @@
       <screen x="1366" y="0" width="1920" height="1170" />
     </state>
     <state x="2108" y="308" key="NewPhpClassDialog/0.0.1366.738/1366.0.1920.1170@1366.0.1920.1170" timestamp="1619867026336" />
-    <state x="2160" y="508" key="NewPhpFileDialog" timestamp="1621325421534">
+    <state x="2160" y="508" key="NewPhpFileDialog" timestamp="1621612693736">
       <screen x="1366" y="0" width="1920" height="1170" />
     </state>
-    <state x="2160" y="508" key="NewPhpFileDialog/0.0.1366.738/1366.0.1920.1170@1366.0.1920.1170" timestamp="1621325421534" />
+    <state x="2160" y="508" key="NewPhpFileDialog/0.0.1366.738/1366.0.1920.1170@1366.0.1920.1170" timestamp="1621612693736" />
     <state x="1458" y="92" width="1736" height="986" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1618929114179">
       <screen x="1366" y="0" width="1920" height="1170" />
     </state>

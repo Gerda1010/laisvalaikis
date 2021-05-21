@@ -75,8 +75,11 @@ Route::post('change-password', 'profileController@store')->middleware(['auth'])-
 
 //Schedule
 Route::get('/schedule', 'scheduleController@index');
-//Route::post('/makeReservation{time}/object{obj}/date{mytime}', 'scheduleController@makeReservation')->middleware(['auth']);
-//Route::get('/makeReservation{time}/object{obj}/date{mytime}', 'scheduleController@makeReservation')->middleware(['auth']);
+//Route::post('/makeReservation', 'scheduleController@makeReservation')->middleware(['auth']);
+//Route::get('/makeReservation', 'scheduleController@makeReservation')->middleware(['auth']);
+
+Route::post('/makeReservation{time}/object{obj}/date{mytime}', 'scheduleController@makeReservation')->middleware(['auth']);
+Route::get('/makeReservation{time}/object{obj}/date{mytime}', 'scheduleController@makeReservation')->middleware(['auth']);
 
 Route::post('/byDate', 'scheduleController@byDate')->name('byDate');
 Route::get('/byDate', 'scheduleController@byDate')->name('byDate');
