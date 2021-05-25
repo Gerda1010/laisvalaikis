@@ -3,7 +3,7 @@
 @section('content')
     <br>
     <div class="grid-container" style="font-size: 16px">
-        <div class="itemT">
+        <div class="itemT"  style="height: 500px;">
        <br>
         <label>
             <h3>Turnyrai</h3>
@@ -45,9 +45,15 @@
             {{--            {{$allTourn->appends(request()->input())->links()}}--}}
 
     </div>
-        <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto; height: 500px;overflow: auto;">
+        <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;width: 100%;height: 500px;overflow: auto;text-align:center">
+            <br>
 
-            <h5 style="text-align: center; ">{{$mytime}}</h5>
+            <form method="post" action="{{action('scheduleController@byDate')}}">
+                @csrf
+                <input style="margin: auto;" name="somedate" type="date" value="{{$mytime}}" onchange="this.form.submit()"  min="{{now()->format('Y-m-d')}}" max="{{ now()->addDays(15)->format('Y-m-d') }}" >
+
+            </form>
+
             <br>
             <table class="table" style="width: 95%; margin:0 auto;">
                 <colgroup>
@@ -66,29 +72,41 @@
                 </thead>
 
                 <tbody>
+
                 @foreach($times as $time)
                     <tr>
                         <td style="width: 20%">
                             <p>{{$time}}</p>
                         </td>
+
                         @foreach($allObjects as $obj)
-                            @if(count($allReservations)===0)
-                                <td style="background-color: seagreen; color: white">Laisva</td>
-                            @else
-                                @foreach($allReservations as $res)
+                            @php
+                                $val = 0
+                            @endphp
+                            @foreach($allReservations as $res)
+                                @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
+                                    <td style="background-color: darkred; color: white">Užimta</td>
 
-                                    @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
-                                        <td style="background-color: darkred; color: white">Užimta</td>
-                                    @else
-                                        <td style="background-color: seagreen; color: white">Laisva</td>
-
-                                    @endif
+                                    @php
+                                        $val = 1
+                                    @endphp
                                     @break
+                                @else
 
-                                @endforeach
+                                    @continue
+
+                                @endif
+                            @endforeach
+                            @if($val != 1)
+                                <td style="background-color: seagreen; color: white">
+
+                                    <a style="height: 50px;padding: 0" onclick="return confirm('Patvirtinkite rezervaciją')" href="{{action('scheduleController@makeReservation',['time'=> $time, 'obj'=>$obj->id_Object, 'mytime'=>$mytime])}}">
+                                        Laisva
+                                    </a>
+                                </td>
                             @endif
-
                         @endforeach
+
 
                     </tr>
                 @endforeach
@@ -97,8 +115,5 @@
                 </tbody>
             </table>
         </div>
-
-
-    </div>
     </div>
 @endsection

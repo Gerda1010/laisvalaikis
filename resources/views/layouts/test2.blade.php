@@ -99,33 +99,30 @@
 <script>
 
     window.onload = function () {
-        var modal = document.getElementById("myModal");
-        // Get the button that opens the modal
+
         var btn = document.getElementById("myBtn");
         // Get the <span> element that closes the modal
-        // var span = document.getElementsByClassName("close")[0];
+        // var span = document.getElementsByClassName("close")[0]
+
+        var btn3 = document.getElementById("singleModalbtn");
+        var btn4 = document.getElementById("trReservation");
+        var btn2 = document.getElementById("logBtn");
+
         var spanId = document.getElementById("spanId");
         var spanId2 = document.getElementById("spanId2");
         var spanId3 = document.getElementById("spanId3");
+        var spanId4 = document.getElementById("spanId4");
 
 
+        var modal = document.getElementById("myModal");
         var modal2 = document.getElementById("logModal");
-// Get the button that opens the modal
-        var btn2 = document.getElementById("logBtn");
-// Get the <span> element that closes the modal
-//         var span2 = document.getElementsByClassName("close2")[0];
-
-//
-// // Get the modal
         var modal3 = document.getElementById("singleModal");
-// Get the button that opens the modal
-        var btn3 = document.getElementById("singleModalbtn");
-// Get the <span> element that closes the modal
-//         var span3 = document.getElementsByClassName("close3")[0];
+        var modal4 = document.getElementById("trReservation");
+
+
         window.onclick = function (event) {
             if (event.target === modal) {
                 modal.style.display = "none";
-                // modal2.style.display = "none";
             }
             else if (event.target === modal2) {
                 modal2.style.display = "none";
@@ -133,35 +130,11 @@
             else if (event.target === modal3) {
                 modal3.style.display = "none";
             }
+            else if (event.target === modal4) {
+                modal4.style.display = "none";
+            }
         }
-        // window.onclick = function(event) {
-        //     if (event.target === modal2) {
-        //         modal2.style.display = "none";
-        //     }
-        // }
-        // window.onclick = function(event) {
-        //     if (event.target === modal3) {
-        //         modal3.style.display = "none";
-        //     }
-        // }
-        // When the user clicks on the button, open the modal
-        // btn.onclick = function () {
-        //     modal.style.display = "block";
-        // }
-        // btn2.onclick = function() {
-        //     modal2.style.display = "block";
-        // }
-        // btn3.onclick = function() {
-        //     modal3.style.display = "block";
-        // }
-
-
-
-
             spanId.onclick = function () {
-
-                // modal2.style.display = "none";
-                // modal3.style.display = "none";
                 modal.style.display = "none";
             }
             spanId2.onclick = function() {
@@ -170,7 +143,9 @@
             spanId3.onclick = function() {
                 modal3.style.display = "none";
             }
-
+            spanId4.onclick = function() {
+                modal4.style.display = "none";
+        }
     }
 </script>
 

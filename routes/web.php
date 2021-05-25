@@ -30,7 +30,10 @@ Route::get('/', 'homeController@guest');
 require __DIR__.'/auth.php';
 
 
-Route::get('send-email', [SendEmailController::class, 'index']);
+//Route::get('send-email', [SendEmailController::class, 'index']);
+//Route::get('/email', 'SendEmailController@create');
+//Route::post('/email', 'SendEmailController@sendEmail')->name('send.email');
+//Route::get('/demoMail', 'teamsController@index')->middleware(['auth']);
 
 
 
@@ -58,8 +61,13 @@ Route::post('/comment/{id}', 'tournamentsController@insertComment')->middleware(
 
 //Route::get('/startTournament/{id}', 'tournamentsController@startTournament')->name('startTournament');
 Route::post('/startTournament/{id}', 'tournamentsController@startTournament')->middleware(['auth'])->name('startTournament');
-Route::post('/insertResult/{id}','tournamentsController@insertResult')->middleware(['auth'])->name('insertResult');
+Route::post('/startTournamentUsers/{id}', 'tournamentsController@startTournamentUsers')->middleware(['auth'])->name('startTournamentUsers');
 
+Route::post('/insertResult/{id}','tournamentsController@insertResult')->middleware(['auth'])->name('insertResult');
+Route::post('/insertResultUsers/{id}','tournamentsController@insertResultUsers')->middleware(['auth'])->name('insertResultUsers');
+
+Route::post('/tournamentReservation/{id}', 'scheduleController@tournamentReservation')->middleware(['auth'])->name('tournamentReservation');
+Route::get('/tournamentReservation/{id}', 'scheduleController@tournamentReservation')->middleware(['auth']);
 
 
 
@@ -83,6 +91,8 @@ Route::get('/makeReservation{time}/object{obj}/date{mytime}', 'scheduleControlle
 
 Route::post('/byDate', 'scheduleController@byDate')->name('byDate');
 Route::get('/byDate', 'scheduleController@byDate')->name('byDate');
+Route::post('/byDateGuest', 'scheduleController@byDateGuest')->name('byDateGuest');
+Route::get('/byDateGuest', 'scheduleController@byDateGuest')->name('byDateGuest');
 
 //Admino useriams
 Route::get('/userList', 'adminUsersController@index');

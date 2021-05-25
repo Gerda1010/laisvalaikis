@@ -378,7 +378,14 @@ p {
         margin-left: 20px;
     }
     #myBtn{
-        margin-bottom: 5px;
+        margin: 10px;
+    }
+    #singleModalbtn{
+        margin: 10px;
+
+    }
+    #myBtnDis{
+        margin: 10px;
     }
     /* Modal Content/Box */
     .modal-content {
@@ -413,6 +420,10 @@ p {
 
 
     }
+}
+#singleModalbtn{
+    margin-left: auto;
+    margin-right:32px;
 }
 
 table {

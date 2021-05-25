@@ -8,6 +8,7 @@
                 <label>
                     <h3 class="title">Naudotojo informacija</h3>
                 </label>
+                <br>
 
                 <div align="left" style="font-size: 1rem;font-weight: bolder">
                     <table class= "table table-hover " style="width: 100%" >

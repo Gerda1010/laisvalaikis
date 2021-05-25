@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 use App\Models\Objects;
 use App\Models\Reservation;
 use App\Models\Team;
+use App\Models\Tournament;
+use App\Models\tournament_team;
 use App\Models\User;
 use App\Rules\MatchOldPassword;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\user_team;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
@@ -21,7 +25,9 @@ class profileController extends Controller
         $userTeams = user_team::where('fk_Userid_User','=',$id)->get();
         $userReservations = Reservation::where('fk_Userid_User', '=', $id)->get();
         $allObjects = Objects::all();
-     //   $allTournTeams = tournament_team::where('fk_Tournamentid_Tournament','=', $id)->get();
+
+
+
         return view('profile',compact('userTeams','allTeams', 'userReservations', 'allObjects'));
     }
     public function cancelReservation($id){
@@ -31,12 +37,8 @@ class profileController extends Controller
     public function __construct()
 
     {
-
         $this->middleware('auth');
-
     }
-
-
 
     /**
 

@@ -10,5 +10,5 @@ class Reservation extends Model
     protected $primaryKey = 'id_Reservation';
     public $timestamps = false;
 
-    protected $fillable = ['reservation_Date', 'fk_Userid_User', 'fk_Objectid_Object'];
+    protected $fillable = ['reservation_Date', 'fk_Userid_User', 'fk_Objectid_Object','fk_Tournament'];
 }

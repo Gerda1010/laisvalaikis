@@ -26,7 +26,7 @@ class homeController extends Controller
         $allReservations = Reservation::where('reservation_Date','=',$mytime)->get();
 
 
-        $allTourn = Tournament::where('State','=',3)->orWhere('State','=', 5)->get();
+        $allTourn = Tournament::where('State','=',6)->orWhere('State','=', 5)->get();
         $allGames = Game::all();
         $allStates = State::all();
 

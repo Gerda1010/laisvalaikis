@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Matches;
 use App\Models\Objects;
 use App\Models\Reservation;
+use App\Models\Tournament;
+use App\Models\UserMatch;
 use Illuminate\Http\Request;
 use App\Models\DateTime;
 use Carbon\Carbon;
@@ -34,25 +37,16 @@ class scheduleController extends Controller
         $allReservations = Reservation::where('reservation_Date','=',$mytime)->get();
         return view('schedule', compact('times', 'allObjects','mytime', 'allReservations'));
     }
-//    public function hoursRange( $lower = 0, $upper = 86400, $step = 3600, $format = '' ) {
-//        $times = array();
-//
-//        if ( empty( $format ) ) {
-//            $format = 'g:i a';
-//        }
-//
-//        foreach ( range( $lower, $upper, $step ) as $increment ) {
-//            $increment = gmdate( 'H:i', $increment );
-//
-//            list( $hour, $minutes ) = explode( ':', $increment );
-//
-//            $date = new DateTime( $hour . ':' . $minutes );
-//
-//            $times[(string) $increment] = $date->format( $format );
-//        }
-//
-//        return $times;
-//    }
+    public function byDateGuest(Request $request){
+        $mytime = $request->input('somedate');
+
+        $allObjects = Objects::all();
+        $times = $this->get_hours_range();
+        $allReservations = Reservation::where('reservation_Date','=',$mytime)->get();
+        return view('welcome', compact('times', 'allObjects','mytime', 'allReservations'));
+
+    }
+
     public function get_hours_range( $start = 28800, $end = 64800, $step = 1200, $format = '' ) {
         $times = array();
         foreach ( range( $start, $end, $step ) as $timestamp ) {
@@ -65,48 +59,108 @@ class scheduleController extends Controller
     }
     public function makeReservation(Request $request, $time, $obj, $mytime){
 
-//        $validator = Validator::make(
-//            [
-//                'fk_Objectid_Object' =>$request->input('fk_Objectid_Object'),
-//                'time'=>$request->input('time'),
-//                'date'=>$request->input('date')
-//
-//            ],
-//            [
-//                'fk_Objectid_Object' => 'required',
-//                'time' => 'required',
-//            ]
-//        );
-//        if ($validator->fails())
-//        {
-//            return Redirect::back()->withErrors($validator);
-//        }
-//        else
-//        {
-//            $newReservation = new Reservation();
-//            $newReservation->reservation_Date = Carbon::now()->format('Y-m-d');
-//            $newReservation->fk_Userid_User = Auth::user()->id;
-//
-//            $newReservation->fk_Objectid_Object = $request->input('fk_Objectid_Object');
-//            $newReservation->time = $request->input('time');
-//            $newReservation->reservation_Date = $request->input('date');;
-//            $newReservation->save();
-//        }
+            $newReservation = new Reservation();
 
-        $newReservation = new Reservation();
-            $newReservation->reservation_Date = $mytime;
             $newReservation->fk_Userid_User = Auth::user()->id;
-
             $newReservation->fk_Objectid_Object = $obj;
             $newReservation->time = $time;
-
+            $newReservation->reservation_Date = $mytime;
             $newReservation->save();
-
 
         return Redirect::back()->with('success', 'Laisvalaikio zona užrezervuota!');
 
+    }
+    public function tournamentReservation(Request $request, $id){
 
+        $allTourn = Tournament::join('game','tournament.fk_Gameid_Game','=','game.id_Game')
+            ->select('*')
+            ->where('id_Tournament','=', $id)
+            ->first();
+
+        $mtCount = Matches::where('fk_Tournamentid_Tournament','=',$id)->count();
+        $usCount = UserMatch::where('fk_Tournamentid_Tournament','=',$id)->count();
+
+        $validator = Validator::make(
+            [
+                'time' =>$request->input('time'),
+            ],
+            [
+                'time' =>'required',
+            ]
+        );
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+        else
+        {
+            $time = $request->input('time');
+            $tmp =0;
+            if($allTourn->NumberOfMembers == 1){
+
+                for($i=0;$i < $usCount;$i++){
+
+                    $res = Reservation::where('time','=', $time)
+                        ->where('fk_Objectid_Object','=',$allTourn->fk_Objectid_Object)
+                        ->where('reservation_Date','=',$allTourn->StartDate)
+                        ->first();
+                    if($res != null){
+
+                        $time = Carbon::parse($time)
+                            ->addSeconds(1200)
+                            ->format('G:i:s');
+                        $tmp++;
+                        $usCount++;
+                    }
+                    else{
+                        $newReservation = new Reservation();
+                        $newReservation->reservation_Date = $allTourn->StartDate;
+                        $newReservation->fk_Objectid_Object = $allTourn->fk_Objectid_Object;
+                        $newReservation->time = $time;
+                        $newReservation->fk_Tournament = $allTourn->id_Tournament;
+                        $newReservation->save();
+                        $time = Carbon::parse($time)
+                            ->addSeconds(1200)
+                            ->format('G:i:s');
+                    }
+                }
+            }
+                else {
+                    for($i=0;$i < $mtCount;$i++){
+                        $res = Reservation::where('time','=', $time)
+                            ->where('fk_Objectid_Object','=',$allTourn->fk_Objectid_Object)
+                            ->where('reservation_Date','=',$allTourn->StartDate)
+                            ->first();
+                        if($res != null) {
+
+                            $time = Carbon::parse($time)
+                                ->addSeconds(1200)
+                                ->format('G:i:s');
+                            $tmp++;
+                            $mtCount++;
+                        }
+                        else{
+                            $newReservation = new Reservation();
+                            $newReservation->reservation_Date = $allTourn->StartDate;
+                            $newReservation->fk_Objectid_Object = $allTourn->fk_Objectid_Object;
+                            $newReservation->time = $time;
+                            $newReservation->fk_Tournament = $allTourn->id_Tournament;
+                            $newReservation->save();
+                            $time = Carbon::parse($time)
+                                ->addSeconds(1200)
+                                ->format('G:i:s');
+
+                        }
+                    }
+                }
+            }
+        if($tmp != 0){
+            return Redirect::back()->with('success', 'Laisvalaikio zonos užrezervuotos. Kai kurie laikai buvo užrezervuoti anksčiau, tikslesnį tvarkaraštį peržiūrėkite tvarkaraščio puslapyje.');
+        }
+        else
+             return Redirect::back()->with('success', 'Laisvalaikio zonos užrezervuotos!');
 
 
     }
+
 }

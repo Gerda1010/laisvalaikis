@@ -4,21 +4,34 @@
 
 <br>
 <div class="row" style="margin-left: 7px">
-    @if($Tournament->State===6)
 
-    @if($maxTeams->NumberOfMembers>1)
+@if($Tournament->State===6)
+
+        @if($maxTeams->NumberOfMembers>1)
             <button id="myBtn" onclick="document.getElementById('myModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px; ">Užsiregistruoti</button>
         @else
-        <button id="singleModalbtn" onclick="document.getElementById('singleModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px;">Užsiregistruoti</button>
+{{--        <button id="singleModalbtn" onclick="document.getElementById('singleModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px;">Užsiregistruoti</button>--}}
+{{--            <button onclick="return confirm('Ar tikrai norite užsiregistruoti į turnyrą?')" action="{{ url('createTournamentUser',$Tournament->id_Tournament)}}" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px;">Užsiregistruoti</button>--}}
+            <form onclick="return confirm('Ar tikrai norite užsiregistruoti į turnyrą?')" action="{{ url('createTournamentUser',$Tournament->id_Tournament)}}"  method="post">
+                {{ csrf_field() }}
+                <input type="submit" value="Užsiregistruoti" style="background-color: darkslategray;  color: white; margin-left: 20px;border-radius: 5px; border: none; height: 35px" />
+            </form>
         @endif
 
         @if($Tournament->fk_Organizerid_User===Auth::user()->id)
-            <form action="{{ route('startTournament',$Tournament->id_Tournament)}}"  method="post">
+            @if($maxTeams->NumberOfMembers>1)
+            <form onclick="return confirm('Ar tikrai norite pradėti turnyrą?')" action="{{ route('startTournament',$Tournament->id_Tournament)}}"  method="post">
                 {{ csrf_field() }}
                 <input type="submit" value="Pradėti turnyrą" style="background-color: darkslategray;  color: white; margin-left: 20px;border-radius: 5px; border: none; height: 35px" />
             </form>
+            @else
+                <form onclick="return confirm('Ar tikrai norite pradėti turnyrą?')" action="{{ route('startTournamentUsers',$Tournament->id_Tournament)}}"  method="post">
+                    {{ csrf_field() }}
+                    <input type="submit" value="Pradėti turnyrą" style="background-color: darkslategray;  color: white; margin-left: 20px;border-radius: 5px; border: none; height: 35px" />
+                </form>
+                @endif
         @endif
-    @else
+@else
 
         @if($maxTeams->NumberOfMembers>1)
             <button id="myBtnDis" style="background-color: dimgray; color: white; margin-left: 20px;border-radius: 5px; " disabled>Užsiregistruoti</button>
@@ -30,8 +43,13 @@
             {{ csrf_field() }}
             <input type="submit" disabled value="Pradėti turnyrą" style="background-color: dimgray; color: white; margin-left: 20px;border-radius: 5px; border: none; height: 35px" />
         </form>
-    @endif
+@endif
     <button id="logBtn" onclick="document.getElementById('logModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px; ">Turnyro istorija</button>
+    @if(($Tournament->fk_Organizerid_User===Auth::user()->id)&&($tournReserv === null)&&($Tournament->State===5))
+
+{{--    @if($Tournament->State===5)--}}
+    <button id="singleModalbtn" onclick="document.getElementById('singleModal').style.display ='block'" style="background-color: darkslategray; color: white;border-radius: 5px;">Rezervuoti laisvalaikio zoną turnyrui</button>
+    @endif
 </div>
     <br>
 {{--Modalas--}}
@@ -45,7 +63,6 @@
                 <h2 >Pasirinkite komandą</h2>
                 <span class="close" id="spanId">&times;</span>
             </div>
-
             <form class="form-horizontal" role="form" method="POST" action="{{ url('createTournamentTeam',$Tournament->id_Tournament)}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group row">
@@ -64,7 +81,8 @@
                         </select>
                     </div>
                 </div>
-               <div ><button type="submit" id="buttonForm" class="btn btn-primary" style="alignment:right;">
+               <div>
+                   <button type="submit" id="buttonForm" class="btn btn-primary" style="alignment:right;">
                        Pridėti
                    </button></div>
                 <br>
@@ -106,51 +124,42 @@
                               @endif
                           @endforeach
                       </tr>
-
                   @endforeach
-
                   </tbody>
               </table>
 
             </div>
-
     </div>
 </div>
 <div id="singleModal" class="modal">
-
-    <!-- Modal content -->
     <div class="modal-content" >
         <div class="modal-header" style="alignment: left">
-            <h3 >Ar tikrai norite užsiregistruoti?</h3>
+            <h3 >Pasirinktite laiką rezervacijai</h3>
             <span class="close" id="spanId3">&times;</span>
         </div>
-        <form class="form-horizontal" role="form" method="POST" action="{{ url('createTournamentUser',$Tournament->id_Tournament)}}">
+        <br>
+        <form class="form-horizontal" role="form" method="POST" action="{{ url('tournamentReservation',$Tournament->id_Tournament)}}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-            <br></br>
+            <br>
+            <select class="form-control" name="time">
+                <option value="09:00" ></option>
+                @foreach($times as $tm)
+                    <option value="{{$tm}}">{{$tm}}</option>
+                @endforeach
+            </select>
             <button type="submit" style="background-color: darkslategray; color: white; margin-top:15px;margin-bottom: 15px;border-radius: 10px; margin: auto;">
-                Registruotis
+                Rezervuoti
             </button>
         </form>
-
-
     </div>
 </div>
-{{--    Modalas--}}
 
-{{--<div class="container-fluid" >--}}
-{{--    <div class="row">--}}
 
 <div class="grid-container" style="width: 100%">
         <div class="item1">
     <label>
         <h3 class="title">{{$Tournament->Name}}</h3>
-
-{{--        <h1>{{$maxTeams->NumberOfMembers}}</h1>--}}
-
     </label>
-
-
 
             <div align="left" style="font-size: 1rem;font-weight: bolder">
                 <table class= "table" style="width: 100%" >
@@ -182,6 +191,17 @@
                         <td style="width: 60%;">Turnyro pradžia</td>
                         <td style="width: 40%;">{{$Tournament->StartDate}}</td>
                     </tr>
+                    <tr style="border-bottom: 1px solid #000;">
+                    @if($tournReserv != null)
+                    <tr>
+
+                        <td style="width: 60%;">Rezervuotas laikas nuo</td>
+
+                        <td style="width: 40%;">{{\Carbon\Carbon::parse($tournReserv->time)->format('G:i')}}</td>
+
+
+                    </tr>
+                    @endif
                     <tr style="border-bottom: 1px solid #000;">
                     <tr>
                         <td style="width: 60%;">Būsena</td>
@@ -228,38 +248,33 @@
             <tbody>
 {{--            @if($maxTeams->NumberOfMembers>1)--}}
 @if($maxTeams->NumberOfMembers>1)
-                @foreach($allTournTeams as $tt)
-                  <tr>
+    @foreach($allTournTeams as $tt)
+        <tr>
             @foreach($allTeams as $team)
                 @if($tt->fk_Teamid_Team === $team->id_Team)
                     <td style="width: 70%;"> {{$team->Name}}  </td>
                 @endif
             @endforeach
-                    <td style="width: 30%;">{{$tt->victories}} </td>
+            <td style="width: 30%;">{{$tt->victories}} </td>
 
-                           </tr>
-            @endforeach
+        </tr>
+    @endforeach
 @else
-                    @foreach($allTournUsers as $tu)
-                        <tr>
-                            @foreach($allUsers as $user)
-                                @if($tu->fk_Userid_User === $user->id)
-                                    <td style="width: 70%;"> {{$user->name}}  </td>
-                                @endif
-                            @endforeach
-                            <td style="width: 30%;">{{$tu->victories}} </td>
-                        </tr>
-                    @endforeach
-
+    @foreach($allTournUsers as $tu)
+        <tr>
+            @foreach($allUsers as $user)
+                @if($tu->fk_Userid_User === $user->id)
+                    <td style="width: 70%;"> {{$user->name}}  </td>
+                @endif
+            @endforeach
+            <td style="width: 30%;">{{$tu->victories}} </td>
+        </tr>
+    @endforeach
 @endif
 
             </tbody>
-
         </table>
-
     </div>
-
-
         <div class="item3">
             <label>
                 <h3 class="title">Komentarai</h3>
@@ -289,10 +304,7 @@
             <p style="margin-bottom: 0px;margin-left: 5px;font-size: 18px">Komentaras:</p>
             <form method="POST" action="{{ Route('insertComment', $Tournament->id_Tournament) }}" class="comment_form">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-
-                <textarea name="com_Text" type="text" class="form-control comment" required="required" placeholder="Rašyti komentarą"></textarea>
-
+                 <textarea name="com_Text" type="text" class="form-control comment" required="required" placeholder="Rašyti komentarą"></textarea>
                 <button type="submit" class="btn btn-primary" id= "buttonForm" style="background-color: darkslategray; color: white; margin-top:15px;margin-bottom: 15px;border-radius: 10px; ">Pateikti</button>
             </form>
         </div>
@@ -353,7 +365,7 @@
                         <td></td>
 
                         <td>
-{
+
                             @if((($mat->result1 === null) &&($mat->result2 === null))||($Tournament->fk_Organizerid_User===Auth::user()->id))
                             <input type="submit" id="matchSave" value="Save" style="background-color: ghostwhite; color: black; border-radius: 5px; " />
 
@@ -372,13 +384,13 @@
         @else
             @foreach($allMatchesUser as $mat)
                 <div style="background-color: #4a5568;color: white;font-size: 16px;padding: 10px;">
-                    <form action="{{ route('insertResult',$mat->id_Match)}}"  method="post" id="matchForm" >
+                    <form action="{{ route('insertResultUsers',$mat->id_user_match)}}"  method="post" id="matchForm" >
                         {{ csrf_field() }}
                         <table>
                             <tbody>
                             @foreach($tournUsers1 as $tu1)
                                 <tr>
-                                    @if($mat->fk_Participantid_User===$tu1->userid)
+                                    @if($mat->fk_Userid_User1===$tu1->userid)
 
                                         <td>{{$tu1->vardas1}}</td>
                                         {{--                        <td>{{$mat->id_team_match}}</td>--}}
@@ -401,7 +413,7 @@
                                 </tr>
                                 <tr>
                                     @foreach($tournUsers2 as $tu2)
-                                        @if($mat->fk_Participantid_User1===$tu2->userid2)
+                                        @if($mat->fk_Userid_User2===$tu2->userid2)
 
                                             <td>{{$tu2->vardas2}}</td>
                                             @if(($mat->result2=== null)||($Tournament->fk_Organizerid_User===Auth::user()->id))
