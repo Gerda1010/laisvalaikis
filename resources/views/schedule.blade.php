@@ -22,9 +22,9 @@
      <table class="table" style="width: 95%; margin:0 auto;">
          <colgroup>
              <col span="1" style="width: 10%;">
-             <col span="1" style="width: 30%;">
-             <col span="1" style="width: 30%;">
-             <col span="1" style="width: 30%;">
+             <col span="2" style="width: 30%;">
+             <col span="3" style="width: 30%;">
+             <col span="4" style="width: 30%;">
          </colgroup>
 
          <thead>

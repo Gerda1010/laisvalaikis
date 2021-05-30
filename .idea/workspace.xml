@@ -21,29 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="bac0b54b-1659-4f92-923b-e704d867aa15" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/adminObjectsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/adminObjectsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/adminUsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/adminUsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/homeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/homeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/profileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/profileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/scheduleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/scheduleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/teamsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/teamsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/tournamentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/tournamentsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Tournament.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Tournament.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/addGame.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/addGame.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/editObject.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/editObject.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/editUser.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/editUser.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/test2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/test2.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/objectList.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/objectList.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/profile.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/schedule.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/schedule.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/teamsRegistration.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/teamsRegistration.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/tournament.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tournament.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/tournaments.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/tournaments.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/userList.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/userList.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +190,7 @@
       <workItem from="1620670255727" duration="11616000" />
       <workItem from="1621184168993" duration="103614000" />
       <workItem from="1621966342841" duration="4752000" />
-      <workItem from="1622047168307" duration="32279000" />
+      <workItem from="1622047168307" duration="33457000" />
     </task>
     <servers />
   </component>

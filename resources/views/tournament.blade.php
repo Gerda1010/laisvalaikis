@@ -45,11 +45,11 @@
         </form>
 @endif
     <button id="logBtn" onclick="document.getElementById('logModal').style.display ='block'" style="background-color: darkslategray; color: white; margin-left: 20px;border-radius: 5px; ">Turnyro istorija</button>
-    @if(($Tournament->fk_Organizerid_User===Auth::user()->id)&&($Tournament->State===5))
+    @if(($Tournament->fk_Organizerid_User===Auth::user()->id)&&(($Tournament->State===5)||($Tournament->State===6)))
 
-{{--    @if($Tournament->State===5)--}}
     <button id="singleModalbtn" onclick="document.getElementById('singleModal').style.display ='block'" style="background-color: darkslategray; color: white;border-radius: 5px;">Rezervuoti laisvalaikio zoną turnyrui</button>
-    @endif
+   @endif
+
 </div>
     <br>
 {{--Modalas--}}
