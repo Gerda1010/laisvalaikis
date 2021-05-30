@@ -2,14 +2,14 @@
 @section('content')
 
     @if(Auth::user()->is_admin)
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <p>There is an error in the data you are entering:</p>
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
+{{--        @if (count($errors) > 0)--}}
+{{--            <div class="alert alert-danger">--}}
+{{--                <p>There is an error in the data you are entering:</p>--}}
+{{--                @foreach ($errors->all() as $error)--}}
+{{--                    <p>{{ $error }}</p>--}}
+{{--                @endforeach--}}
+{{--            </div>--}}
+{{--        @endif--}}
         <div class="container">
             <div class="row justify-content-center">
 
@@ -26,23 +26,6 @@
                                         <input type="text" class="form-control" name="name" value="{{$selectedUser->name}}">
                                     </div>
                                 </div>
-                                {{-- <div class="form-group row">
-                                           <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px; color: white">Kategorija</label>
-                           <div class="col-md-6">
-                                         <select class="form-control" name="fk_prekes_kategorija">
-                                             @foreach($allCat as $ct)
-                                                 @if($selectedProduct->fk_prekes_kategorija === $ct->id_kateg)
-                                                     <option value="{{$selectedProduct->fk_prekes_kategorija}}">{{$ct->pavadinimas}}</option>
-                                                 @endif
-                                             @endforeach
-                                             @foreach($allCat as $ct)
-                                                 @if($selectedProduct->fk_prekes_kategorija != $ct->id_kateg)
-                                                     <option value="{{$ct->id_kateg}}">{{$ct->pavadinimas}}</option>
-                                                 @endif
-                                             @endforeach
-                                         </select>
-                                     </div>
-                                 </div> --}}
 
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px;">El. paštas</label>
@@ -50,8 +33,6 @@
                                         <input type="text" class="form-control" name="email" value="{{$selectedUser->email}}">
                                     </div>
                                 </div>
-
-
 
                                 <div>
                                     <button type="submit" id="buttonForm"class="btn btn-primary" style="alignment: right">

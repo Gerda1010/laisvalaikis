@@ -253,6 +253,22 @@ p {
     text-align: left;
     padding: 10px;
 }
+.grid-container3 {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows:auto auto;
+    grid-gap: 100px;
+    text-align: left;
+    padding: 10px;
+}
+.grid-container1 {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows:auto auto;
+    grid-gap: 10px;
+    text-align: center;
+    padding: 10px;
+}
 
 .grid-container > div {
 

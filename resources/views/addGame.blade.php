@@ -19,7 +19,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px">Narių skaičius</label>
+                                    <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px">Narių komandoje</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="NumberOfMembers" value="{{ old('NumberOfMembers') }}">
                                     </div>

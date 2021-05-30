@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\event_log;
 use App\Models\Matches;
 use App\Models\Obtained;
+use App\Models\Reservation;
 use App\Models\Tournament;
 use App\Models\tournament_team;
 use App\Models\user_team;
@@ -60,7 +61,7 @@ class adminObjectsController extends Controller
     {
         //$Obtained = Obtained::all();
         $selectedObject = Objects::where('id_Object','=',$id)
-            ->select('Objects.*')
+            ->select('objects.*')
             ->first();
         $Obtained = Obtained::all();
 
@@ -75,10 +76,20 @@ class adminObjectsController extends Controller
         $logai = event_log::all();
         $tournaments = Tournament::all();
         $matchai = Matches::all();
+        $reserv = Reservation::all();
 //        $tournaments = Tournament::where('fk_Gameid_Game','=',)
 //        $games=Game::where('fk_Objectid_Object','=',$id)->get();
 
 //        foreach ($tournaments as $tourn) {
+
+
+
+        //pasalinti rezervacijas
+        foreach ($reserv as $rr){
+//            $rezerv=  Reservation::where('fk_Tournament','=',$rr->id_Tournament)->get();
+                Reservation::where('fk_Objectid_Object', '=', $id)->delete();
+
+        }
 
         //pasalina komentarus
          foreach ($games as $gme){
@@ -119,6 +130,7 @@ class adminObjectsController extends Controller
             }
         }
 
+
         //Pasalina turnyrus
         foreach ($games as $gme){
             foreach ($tournaments as $trn){
@@ -154,6 +166,7 @@ class adminObjectsController extends Controller
             $newObject = new Objects();
             $newObject->Name = $request->input('Name');
             $newObject->Obtain = $request->input('Obtain');
+            $newObject->active = 0;
 
             $newObject->save();
 
@@ -182,14 +195,13 @@ class adminObjectsController extends Controller
         //pasalina turnyro komandas
 
             foreach ($turnyrai as $tr){
-                $tourn_teams = tournament_team::where('fk_Tournamentid_Tournament','=', $tr->id_Tournament);
-                foreach ($tourn_teams as $usTm){
+                $tournTeams = tournament_team::where('fk_Tournamentid_Tournament','=', $tr->id_Tournament);
+                foreach ($tournTeams as $usTm){
                     tournament_team::where('fk_Tournamentid_Tournament', '=', $tr->id_Tournament)->delete();
                 }
             }
 
         //pasalina logus
-
 
             foreach ($turnyrai as $tr){
                 $logai=  event_log::where('fk_Tournament','=',$tr->id_Tournament)->get();
@@ -197,7 +209,6 @@ class adminObjectsController extends Controller
                     event_log::where('fk_Tournament', '=', $tr->id_Tournament)->delete();
                 }
             }
-
 
         //pasalinti matchus
 
@@ -207,6 +218,13 @@ class adminObjectsController extends Controller
                     Matches::where('fk_Tournamentid_Tournament', '=', $tr->id_Tournament)->delete();
                 }
             }
+            //pasalinti rezervacijas
+        foreach ($turnyrai as $rr){
+            $rezerv=  Reservation::where('fk_Tournament','=',$rr->id_Tournament)->get();
+            foreach ($rezerv as $res){
+                Reservation::where('fk_Tournament', '=', $rr->id_Tournament)->delete();
+            }
+        }
 
         //Pasalina turnyrus
         foreach ($turnyrai as $tr){

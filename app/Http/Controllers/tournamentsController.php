@@ -30,6 +30,7 @@ class tournamentsController extends Controller
     public function index ()
     {
         $allTourn = Tournament::orderby('state','desc')->get();
+        $allUsers = User::all();
 
         $allStates = State::all();
         $allGames = Game::all();
@@ -42,16 +43,23 @@ class tournamentsController extends Controller
                 ->groupBy('fk_Tournamentid_Tournament');
 
         }
-        return view('tournaments', compact('allTourn', 'allStates', 'allGames'));
+        return view('tournaments', compact('allTourn', 'allStates', 'allGames', 'allUsers'));
     }
     public function openTournament($id){
 
+
         $Tournament = Tournament::where('id_Tournament', '=', $id)->first();
+        $objektas = Tournament::join('game','tournament.fk_Gameid_Game','=','game.id_Game')
+            ->select('game.fk_Objectid_Object')
+            ->where('tournament.id_Tournament','=',$id)
+            ->first();
+
         $maxTeams = Tournament::join('game','tournament.fk_Gameid_Game','=','game.id_Game')
             ->select('game.NumberOfMembers')
             ->where('tournament.id_Tournament','=',$id)
             ->first();
         $maxxx = $maxTeams->NumberOfMembers;
+        $reservations = Reservation::where('reservation_Date','=',$Tournament->StartDate)->where('fk_Objectid_Object','=',$objektas->fk_Objectid_Object)->get();
 
         $allTeams = Team::where('members','=',$maxxx)->get();
         $logs = event_log::where('fk_Tournament', '=', $id)->get();
@@ -74,21 +82,21 @@ class tournamentsController extends Controller
 
       //  $tournTeams = Team::where('fk_Tournamentid_Tournament','=', $id)->get();
 
-       $tournTeams1 = Matches::join('Team','Matches.fk_Team1','=','Team.id_Team')
-           ->select('Team.Name as pavad1','Team.id_Team as komid','Matches.*')
+       $tournTeams1 = Matches::join('team','Matches.fk_Team1','=','team.id_Team')
+           ->select('team.Name as pavad1','team.id_Team as komid','matches.*')
            ->distinct(['komid'])
            ->get();
-        $tournTeams2 = Matches::join('Team','Matches.fk_Team2','=','Team.id_Team')
-            ->select('Team.Name as pavad2','Team.id_Team as komid2','Matches.*')
+        $tournTeams2 = Matches::join('team','matches.fk_Team2','=','team.id_Team')
+            ->select('team.Name as pavad2','team.id_Team as komid2','matches.*')
             ->distinct()
             ->get(['komid2']);
 
-        $tournUsers1 = UserMatch::join('Users', 'user_matches.fk_Userid_User1','=','Users.id')
-            ->select('Users.name as vardas1','Users.id as userid','user_matches.*')
+        $tournUsers1 = UserMatch::join('users', 'user_matches.fk_Userid_User1','=','users.id')
+            ->select('Users.name as vardas1','users.id as userid','user_matches.*')
             ->distinct(['userid'])
             ->get();
-        $tournUsers2 = UserMatch::join('Users', 'user_matches.fk_Userid_User2','=','Users.id')
-            ->select('Users.name as vardas2','Users.id as userid2','user_matches.*')
+        $tournUsers2 = UserMatch::join('users', 'user_matches.fk_Userid_User2','=','users.id')
+            ->select('users.name as vardas2','users.id as userid2','user_matches.*')
             ->distinct(['userid2'])
             ->get();
 
@@ -97,7 +105,7 @@ class tournamentsController extends Controller
 
         $komandos = tournament_team::where('fk_Tournamentid_Tournament','=',36)->orderby('victories','desc')->first();
 
-        return view('tournament', compact('Tournament','komandos','times','tournUsers1','tournUsers2','tournReserv','maxTeams','allTeams','allMatchesUser', 'allUserTeams','logs','allUsers', 'allGames', 'allStates', 'allTournTeams', 'allTournUsers','allComments','allMatches','tournTeams1','tournTeams2'));
+        return view('tournament', compact('Tournament','objektas','komandos','reservations','times','tournUsers1','tournUsers2','tournReserv','maxTeams','allTeams','allMatchesUser', 'allUserTeams','logs','allUsers', 'allGames', 'allStates', 'allTournTeams', 'allTournUsers','allComments','allMatches','tournTeams1','tournTeams2'));
     }
     public function get_hours_range( $start = 28800, $end = 64800, $step = 1200, $format = '' ) {
         $times = array();
@@ -187,6 +195,8 @@ class tournamentsController extends Controller
             if($teamsCount==$turnyras->MaximumTeams){
             return $this->startTournament($id);
         }
+            else
+                return back()->with('success', 'Jūs užsiregistravote!');
         }
         else
          return back()->with('success', 'Jūs užsiregistravote!');
@@ -598,6 +608,7 @@ class tournamentsController extends Controller
             Tournament::where('id_Tournament', '=', $id2)->update(
                 [
                     'state'=> 1,//finished
+                    'tournWinner'=>$winner->fk_Teamid_Team
                 ]);
 
             Team::where('id_Team', '=', $winner->fk_Teamid_Team)->update(
@@ -640,6 +651,7 @@ class tournamentsController extends Controller
             Tournament::where('id_Tournament', '=', $id2)->update(
                 [
                     'state'=> 1,//finished
+                    'tournWinner' => $winner->fk_Userid_User
                 ]);
 
 //            User::where('id', '=', $winner->fk_Teamid_Team)->update(

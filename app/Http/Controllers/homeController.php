@@ -25,12 +25,12 @@ class homeController extends Controller
         $times = $this->get_hours_range();
         $allReservations = Reservation::where('reservation_Date','=',$mytime)->get();
 
-
+        $tourn = Tournament::all();
         $allTourn = Tournament::where('State','=',6)->orWhere('State','=', 5)->get();
         $allGames = Game::all();
         $allStates = State::all();
 
-        return view('dashboard', compact('times', 'allObjects','mytime', 'allReservations', 'allTourn', 'allGames', 'allStates'));
+        return view('dashboard', compact('times', 'allObjects','mytime','tourn', 'allReservations', 'allTourn', 'allGames', 'allStates'));
     }
     public function get_hours_range( $start = 28800, $end = 64800, $step = 1200, $format = '' ) {
         $times = array();

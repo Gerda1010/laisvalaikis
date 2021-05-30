@@ -10,5 +10,5 @@ class Objects extends Model
     protected $primaryKey = 'id_team';
     public $timestamps = false;
 
-    protected $fillable = ['Name', 'Obtain'];
+    protected $fillable = ['Name', 'Obtain','active'];
 }

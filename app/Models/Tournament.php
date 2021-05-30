@@ -10,5 +10,5 @@ class Tournament extends Model
     protected $primaryKey = 'id_Tournament';
     public $timestamps = false;
 
-    protected $fillable = ['Name', 'MaximumTeams', 'StartDate', 'State','StartEvent', 'fk_Organizerid_User', 'fk_Userid_User','fk_Gameid_Game' ];
+    protected $fillable = ['Name', 'MaximumTeams', 'StartDate', 'State','StartEvent', 'fk_Organizerid_User', 'fk_Userid_User','fk_Gameid_Game', 'tournWinner' ];
 }

@@ -2,8 +2,8 @@
 
 @section('content')
     <br>
-    <div class="grid-container" style="font-size: 16px">
-        <div class="itemT"  style="height: 500px;">
+    <div class="grid-container3" style="font-size: 16px">
+        <div class="itemT"  style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;width: 80%;height: 700px;overflow: auto;text-align:center">
        <br>
         <label>
             <h3>Turnyrai</h3>
@@ -45,7 +45,7 @@
             {{--            {{$allTourn->appends(request()->input())->links()}}--}}
 
     </div>
-        <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;width: 100%;height: 500px;overflow: auto;text-align:center">
+        <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin:0 auto;width: 80%;height: 700px;overflow: auto;text-align:center">
             <br>
 
             <form method="post" action="{{action('scheduleController@byDate')}}">
@@ -57,10 +57,10 @@
             <br>
             <table class="table" style="width: 95%; margin:0 auto;">
                 <colgroup>
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 30%;">
+                    <col span="1" style="width: 30%;">
+                    <col span="1" style="width: 30%;">
                 </colgroup>
 
                 <thead>
@@ -74,9 +74,10 @@
                 <tbody>
 
                 @foreach($times as $time)
+
                     <tr>
-                        <td style="width: 20%">
-                            <p>{{$time}}</p>
+                        <td style="width: 10%">
+                            <p>{{\Carbon\Carbon::parse($time)->format('G:i')}}</p>
                         </td>
 
                         @foreach($allObjects as $obj)
@@ -85,8 +86,15 @@
                             @endphp
                             @foreach($allReservations as $res)
                                 @if(($res->time===$time)&&($res->fk_Objectid_Object===$obj->id_Object))
-                                    <td style="background-color: darkred; color: white">Užimta</td>
-
+                                    @if($res->fk_Tournament == null)
+                                        <td style="background-color: darkred; color: white;width: 30%">Užimta</td>
+                                    @else
+                                        @foreach($tourn as $tr)
+                                            @if($res->fk_Tournament==$tr->id_Tournament)
+                                                <td style="background-color: rebeccapurple; color: white;width: 30%">{{$tr->Name}}</td>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                     @php
                                         $val = 1
                                     @endphp
@@ -98,9 +106,9 @@
                                 @endif
                             @endforeach
                             @if($val != 1)
-                                <td style="background-color: seagreen; color: white">
+                                <td style="background-color: seagreen; color: white;width: 30%">
 
-                                    <a style="height: 50px;padding: 0" onclick="return confirm('Patvirtinkite rezervaciją')" href="{{action('scheduleController@makeReservation',['time'=> $time, 'obj'=>$obj->id_Object, 'mytime'=>$mytime])}}">
+                                    <a style="height: 50px;padding: 0" onclick="return confirm('Patvirtinkite rezervaciją')" href="{{action('scheduleController@makeReservation',['time'=> $time, 'obj'=>$obj->id_Object, 'mytime'=>$mytime ])}}">
                                         Laisva
                                     </a>
                                 </td>

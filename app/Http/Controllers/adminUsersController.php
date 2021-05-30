@@ -24,6 +24,7 @@ class adminUsersController extends Controller
 }
     public function confirmEditedUser(Request $request, $id)
     {
+        $user= User::where('id','=',$id)->first();
         $validator = Validator::make(
             [
                 'name'=> $request->input('name'),
@@ -31,21 +32,23 @@ class adminUsersController extends Controller
             ],
             [
                 'name'=> 'required|max:50',
-                'email'=> 'required|unique:users'
+                'email'=> 'required|unique:users,email,'.$user->id
             ]
         );
 
         if ($validator->fails())
         {
-            return Redirect::back()->withErrors($validator, 'error message');
+//            return Redirect::back()->withErrors($validator, 'error message');
+//            return Redirect::back()->withErrors('Turite pasirinkti bent vieną komandos narį');
+            return Redirect::back()->withErrors($validator)->withInput();
         }
         else
         {
-            $data = User::where('id', '=', $id)->update(
+
+            User::where('id', '=', $id)->update(
                 [
                     'name'=> $request->input('name'),
-                    'email'=> $request->input('email'),
-                    'is_admin' => $request->input('is_admin')
+                    'email'=> $request->input('email')
                 ]
             );
         }

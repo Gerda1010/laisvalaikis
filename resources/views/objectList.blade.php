@@ -38,7 +38,7 @@
 
                            <td><a href="{{ route('editObject', $asObject->id_Object)}}">  <i class="fa fa-pencil" style="font-size:20px; color:darkslategrey"  aria-hidden="true"></i></a></td>
 
-                            <td><a onclick="return confirm('Ar tikrai norite pašalinti?')" href="{{ route('deleteObject', $asObject->id_Object)}}">  <i class="fa fa-trash-o" style="font-size:20px; color:darkslategrey"  aria-hidden="true"></i></a></td>
+                            <td><a onclick="return confirm('Ar tikrai norite pašalinti? Pašalinus objektą, bus pašalinamos objekto rezervacijos ir turnyrai bei jų informacija')" href="{{ route('deleteObject', $asObject->id_Object)}}">  <i class="fa fa-trash-o" style="font-size:20px; color:darkslategrey"  aria-hidden="true"></i></a></td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -79,7 +79,7 @@
 {{--                            <td width="50"><a onclick="return confirm('Do you really want to delete this user?')" href="{{route('deleteObject', $asObject->id_Object)}}"><button class="button" type="delete"><svg class="bi bi-x-square-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">--}}
 {{--                                            <path fill-rule="evenodd" d="M2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2zm9.854 4.854a.5.5 0 00-.708-.708L8 7.293 4.854 4.146a.5.5 0 10-.708.708L7.293 8l-3.147 3.146a.5.5 0 00.708.708L8 8.707l3.146 3.147a.5.5 0 00.708-.708L8.707 8l3.147-3.146z" clip-rule="evenodd"/>--}}
 {{--                                        </svg></button></a></td>--}}
-                            <td><a onclick="return confirm('Do you really want to delete this game?')" href="{{route('deleteGame', $asGame->id_Game)}}">  <i class="fa fa-trash-o" style="font-size:20px; color:darkslategrey"  aria-hidden="true"></i></a></td>
+                            <td><a onclick="return confirm('Ar tikrai norite pašalinti? Pašalinus žaidimą, bus pašalinami turnyrai bei jų informacija')" href="{{route('deleteGame', $asGame->id_Game)}}">  <i class="fa fa-trash-o" style="font-size:20px; color:darkslategrey"  aria-hidden="true"></i></a></td>
 
                         </tr>
                     @endforeach

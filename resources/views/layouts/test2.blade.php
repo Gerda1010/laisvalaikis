@@ -37,10 +37,10 @@
             <div class="alert alert-success" style="background-color: darkgreen; color: white; margin-bottom: 10px">
                 <p>{{ $message }}</p>
             </div>
-        @elseif ($message = Session::get('warning'))
-            <div class="alert alert-success" style="background-color: yellow; color: white; margin-bottom: 10px">
-                <p>{{ $message }}</p>
-            </div>
+{{--        @elseif ($message = Session::get('warning'))--}}
+{{--            <div class="alert alert-success" style="background-color: yellow; color: white; margin-bottom: 10px">--}}
+{{--                <p>{{ $message }}</p>--}}
+{{--            </div>--}}
     </div>
 @endif
 

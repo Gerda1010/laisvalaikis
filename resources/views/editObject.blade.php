@@ -26,29 +26,12 @@
                                         <input type="text" class="form-control" name="Name" value="{{$selectedObject->Name}}">
                                     </div>
                                 </div>
-                              {{-- <div class="form-group row">
-                                         <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px; color: white">Kategorija</label>
-                         <div class="col-md-6">
-                                       <select class="form-control" name="fk_prekes_kategorija">
-                                           @foreach($allCat as $ct)
-                                               @if($selectedProduct->fk_prekes_kategorija === $ct->id_kateg)
-                                                   <option value="{{$selectedProduct->fk_prekes_kategorija}}">{{$ct->pavadinimas}}</option>
-                                               @endif
-                                           @endforeach
-                                           @foreach($allCat as $ct)
-                                               @if($selectedProduct->fk_prekes_kategorija != $ct->id_kateg)
-                                                   <option value="{{$ct->id_kateg}}">{{$ct->pavadinimas}}</option>
-                                               @endif
-                                           @endforeach
-                                       </select>
-                                   </div>
-                               </div> --}}
 
                                 <div class="form-group row">
                                     <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px">Įsigijimas</label>
                                     <div class="col-md-6">
-                                        <select class="form-control" name="Obtain">
-                                            <option value="{{ old('Obtain') }}" ></option>
+                                        <select class="form-control" name="Obtain" value="{{ old('Obtain') }}">
+                                            <option value="{{ old('Obtain') }}"></option>
                                             @foreach($Obtained as $obt)
                                                 <option value="{{$obt->id_Obtained}}">{{$obt->name}}</option>
                                             @endforeach

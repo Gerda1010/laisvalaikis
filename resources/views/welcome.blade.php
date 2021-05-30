@@ -53,8 +53,8 @@
                 </div>
             <main>
                 <br>
-                <div class="grid-container" style="font-size: 16px">
-                <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin: 0 auto;width: 70%;height: 500px;overflow: auto;text-align:center">
+                <div class="grid-container1" style="font-size: 16px">
+                <div class="itemT" style="background-color: ghostwhite;border-radius: 20px; margin: 0 auto;width: 50%;height: 700px;overflow: auto;text-align:center">
                     <br>
 
                     <form method="post" action="{{action('scheduleController@byDateGuest')}}">

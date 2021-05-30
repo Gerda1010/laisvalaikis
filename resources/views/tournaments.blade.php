@@ -12,10 +12,12 @@
             <table id="table" class="table table-hover table-condensed" >
                 <thead>
                 <tr>
-                    <th style="width:30%;border-bottom: 10px;">Pavadinimas</th>
-                    <th style="width:30%;border-bottom: 10px;">Žaidimas</th>
+                    <th style="width:25%;border-bottom: 10px;">Pavadinimas</th>
+                    <th style="width:20%;border-bottom: 10px;">Žaidimas</th>
 {{--                    <th style="width:30%;border-bottom: 10px;">Komandų skaičius</th>--}}
-                    <th style="width:30%;border-bottom: 10px;">Būsena</th>
+                    <th style="width:15%;border-bottom: 10px;">Turnyro data</th>
+                    <th style="width:20%;border-bottom: 10px;">Organizatorius</th>
+                    <th style="width:20%;border-bottom: 10px;">Būsena</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,7 +31,14 @@
                             @endif
                         @endforeach
 
-{{--                        <td>{{ $asTr->teamsCount }}</td>--}}
+                        <td>{{ $asTr->StartDate }}</td>
+
+                    @foreach($allUsers as $us)
+                        @if($us->id === $asTr->fk_Organizerid_User)
+                            <td>{{ $us->name }}</td>
+
+                        @endif
+                    @endforeach
 
                         @foreach($allStates as $stt)
                             @if($stt->id_State === $asTr->State)

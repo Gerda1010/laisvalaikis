@@ -23,7 +23,7 @@ class profileController extends Controller
         $id = Auth::user()->id;
         $allTeams = Team::all();
         $userTeams = user_team::where('fk_Userid_User','=',$id)->get();
-        $userReservations = Reservation::where('fk_Userid_User', '=', $id)->get();
+        $userReservations = Reservation::where('fk_Userid_User', '=', $id)->where('reservation_Date','>=',Carbon::today())->orderby('reservation_Date')->get();
         $allObjects = Objects::all();
 
 

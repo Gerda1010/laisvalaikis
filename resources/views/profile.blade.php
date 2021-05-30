@@ -16,28 +16,20 @@
                             <col span="1" style="width: 60%;">
                             <col span="1" style="width: 40%;">
                         </colgroup>
-
                         <tbody>
                         <tr>
                             <td style="width: 60%;">Vartotojo vardas</td>
-
                             <td style="width: 40%;" >{{Auth::user()->name}}</td>
-
                         </tr>
                         <tr>
                             <td style="width: 60%;">El. paštas</td>
-
                             <td style="width: 40%;" >{{Auth::user()->email}}</td>
-
                         </tr>
                         </tbody>
-
                     </table>
                 </div>
-
                 <a href="{{action('profileController@changePassword')}}" id="button1" class="btn btn-dark" style="width: 150px; margin-left: 5px;margin-right: 5px">
                     Keisti slaptažodį </a>
-
             </div>
 
             <div class="item22" >
@@ -96,7 +88,7 @@
                             @endforeach
                             <td style="width: 30%;" >{{$usRe->reservation_Date}}</td>
                             <td style="width: 30%;" >{{$usRe->time}}</td>
-{{--                            <td  style="width: 20%;"> Atsaukti</td>--}}
+
                                 <td style="width: 20%;"><a onclick="return confirm('Ar tikrai norite atšaukti rezervaciją?')" href="{{ route('cancelReservation', $usRe->id_Reservation)}}">  <i class="fa fa-trash-o" style="font-size:20px; color:darkslategrey"  aria-hidden="true"></i></a></td>
 
 

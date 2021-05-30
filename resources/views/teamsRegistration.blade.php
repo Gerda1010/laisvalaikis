@@ -16,9 +16,17 @@
                                 <input type="text" class="form-control" name="Name" value="{{ old('Name') }}">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px;">Komandos narys</label>
+                            <div class="col-md-6" style = "padding-top: 7px; color: dimgrey">
+
+                                            <label>{{Auth::user()->name}}</label>
+
+                            </div>
+                        </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px">Naudotojai</label>
+                            <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px">Komandos narys</label>
                             <div class="col-md-6">
                             <select class="form-control" name="fk_Userid_User1">
                                 <option value="{{ old('fk_Userid_User') }}" ></option>
@@ -33,7 +41,7 @@
 
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px">Naudotojai</label>
+                            <label class="col-md-3 col-form-label text-md-right" style="margin-left: 30px">Komandos narys</label>
                             <div class="col-md-6">
                             <select class="form-control" name="fk_Userid_User2">
                                 <option value="{{ old('fk_Userid_User') }}" ></option>
@@ -45,18 +53,11 @@
                             </select>
                             </div></div>
 
-
-
-
                             <div class="col-md-10 offset-md-4" style="margin-left: -35px">
                                 <button type="submit" id="buttonForm"class="btn btn-primary">
                                     Pridėti
                                 </button>
                             </div>
-
-
-
-
 
                     </form>
                 </div>

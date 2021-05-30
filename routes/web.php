@@ -69,7 +69,11 @@ Route::post('/insertResultUsers/{id}','tournamentsController@insertResultUsers')
 Route::post('/tournamentReservation/{id}', 'scheduleController@tournamentReservation')->middleware(['auth'])->name('tournamentReservation');
 Route::get('/tournamentReservation/{id}', 'scheduleController@tournamentReservation')->middleware(['auth']);
 
+Route::post('/tournamentReservationTest/{id}', 'scheduleController@tournamentReservationTest')->middleware(['auth'])->name('tournamentReservationTest');
+Route::get('/tournamentReservationTest/{id}', 'scheduleController@tournamentReservationTest')->middleware(['auth']);
 
+Route::get('/tournamentReservationCancel/{id}','scheduleController@cancelTournamentReservation')->name('cancelTournamentReservation')->middleware(['auth']);
+Route::post('/tournamentReservationCancel/{id}','scheduleController@cancelTournamentReservation')->name('cancelTournamentReservation')->middleware(['auth']);
 
 //Profile
 Route::get('/profile', 'profileController@index')->middleware(['auth']);
@@ -82,15 +86,17 @@ Route::post('change-password', 'profileController@store')->middleware(['auth'])-
 
 
 //Schedule
-Route::get('/schedule', 'scheduleController@index');
+Route::get('/schedule', 'scheduleController@index')->middleware(['auth']);
 //Route::post('/makeReservation', 'scheduleController@makeReservation')->middleware(['auth']);
 //Route::get('/makeReservation', 'scheduleController@makeReservation')->middleware(['auth']);
 
-Route::post('/makeReservation{time}/object{obj}/date{mytime}', 'scheduleController@makeReservation')->middleware(['auth']);
+
 Route::get('/makeReservation{time}/object{obj}/date{mytime}', 'scheduleController@makeReservation')->middleware(['auth']);
+Route::post('/makeReservation{time}/object{obj}/date{mytime}', 'scheduleController@makeReservation')->middleware(['auth']);
 
 Route::post('/byDate', 'scheduleController@byDate')->name('byDate');
 Route::get('/byDate', 'scheduleController@byDate')->name('byDate');
+
 Route::post('/byDateGuest', 'scheduleController@byDateGuest')->name('byDateGuest');
 Route::get('/byDateGuest', 'scheduleController@byDateGuest')->name('byDateGuest');
 

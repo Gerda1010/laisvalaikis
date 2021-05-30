@@ -48,24 +48,39 @@ class teamsController extends Controller
         {
             $newTeam = new Team();
             $newTeam->Name = $request->input('Name');
+
             $teamName = $request->input('Name');
 
             if($request->input('fk_Userid_User2')==null){
 
-                $tm1 = user_team::join('Team','user_team.fk_Teamid_Team','=','Team.id_Team')
+                $tm1 = user_team::join('team','user_team.fk_Teamid_Team','=','team.id_Team')
                     ->select('*')
                     ->where('fk_Userid_User', '=',Auth::user()->id)
-                    ->first();
+//                    ->first();
+                ->get();
 
-                $tm2 = user_team::join('Team','user_team.fk_Teamid_Team','=','Team.id_Team')
+                $tm2 = user_team::join('team','user_team.fk_Teamid_Team','=','team.id_Team')
                     ->select('*')
                     ->where('fk_Userid_User', '=',$request->input('fk_Userid_User1'))
-                    ->first();
-                if(($tm1 != null )&&($tm2 != null )){
-                if($tm1->fk_Teamid_Team==$tm2->fk_Teamid_Team) {
-//                    , $tm1->fk_Teamid_Team
+//                    ->first();
+                ->get();
+                $tmp = 0;
+                foreach ($tm1 as $tmm1){
+                    foreach ($tm2 as $tmm2){
+                        if($tmm1->fk_Teamid_Team==$tmm2->fk_Teamid_Team){
+                            $tmp++;
+                        }
+                    }
+                }
+                if($tmp != 0)
                     return Redirect::back()->withErrors('Tokia komanda jau egzistuoja ');
-                }}
+
+//                if(($tm1 != null )&&($tm2 != null )){
+//                if($tm1->fk_Teamid_Team==$tm2->fk_Teamid_Team) {
+////                    , $tm1->fk_Teamid_Team
+//                    return Redirect::back()->withErrors('Tokia komanda jau egzistuoja ');
+//                }
+//                }
                 else{
                     $newTeam->members = 2;
                     $newTeam->save();
@@ -88,16 +103,16 @@ class teamsController extends Controller
             }
             else{
 
-                $tm3 = user_team::join('Team','user_team.fk_Teamid_Team','=','Team.id_Team')
+                $tm3 = user_team::join('team','user_team.fk_Teamid_Team','=','team.id_Team')
                     ->select('*')
                     ->where('fk_Userid_User', '=',Auth::user()->id)
                     ->first();
 
-                $tm4 = user_team::join('Team','user_team.fk_Teamid_Team','=','Team.id_Team')
+                $tm4 = user_team::join('team','user_team.fk_Teamid_Team','=','team.id_Team')
                     ->select('*')
                     ->where('fk_Userid_User', '=',$request->input('fk_Userid_User1'))
                     ->first();
-                $tm5 = user_team::join('Team','user_team.fk_Teamid_Team','=','Team.id_Team')
+                $tm5 = user_team::join('team','user_team.fk_Teamid_Team','=','team.id_Team')
                     ->select('*')
                     ->where('fk_Userid_User', '=',$request->input('fk_Userid_User2'))
                     ->first();
